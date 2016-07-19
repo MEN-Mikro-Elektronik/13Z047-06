@@ -1,0 +1,27 @@
+@INCLUDE_PATH = $(MEN_DOXYGENTMPL)
+@INCLUDE = DoxyfileCommon
+
+PROJECT_NAME           = "Z47 MDIS Driver"
+INPUT                  = ../DRIVER/COM \
+                         ../../../../TOOLS/WDOG/WDOG_CTRL/COM/wdog_ctrl.c \
+                         ../../../../TOOLS/WDOG/WDOG_SIMP/COM/wdog_simp.c \
+                         ../../../../TOOLS/WDOG/WDOG_TEST/COM/wdog_test.c \
+                         $(MEN_COM_INC)/MEN/wdog.h
+
+EXAMPLE_RECURSIVE      = YES
+EXAMPLE_PATH           = ../DRIVER/COM \
+                         ../../../../TOOLS/WDOG/WDOG_CTRL/COM \
+                         ../../../../TOOLS/WDOG/WDOG_SIMP/COM \
+                         ../../../../TOOLS/WDOG/WDOG_TEST/COM \
+
+OUTPUT_DIRECTORY       = .
+EXTRACT_ALL            = YES
+EXTRACT_STATIC         = YES
+GENERATE_HTMLHELP      = YES
+WARNINGS               = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_IF_UNDOCUMENTED   = YES
+GENERATE_HTMLHELP      = YES
+SOURCE_BROWSER         = YES
+TAGFILES               = ../../../../LIBSRC/MDIS_API/DOC/mdis_api.tag=../../../../../LIBSRC/MDIS_API/DOC/html
+GENERATE_TAGFILE       = z47_driver.tag
