@@ -130,8 +130,8 @@ static int32 WdogTrig(LL_HANDLE *llHdl, int32 pat);
 /******************************** Z47_Init **********************************/
 /** Allocate and return low-level handle, initialize hardware
  *
- * The function initializes all channels with the definitions made
- * in the descriptor. The interrupt is disabled.
+ * The function resets the watchdog counter, WDOG_TIMEOUT, WDOG_IRQ signals
+ * and restarts the watchdog functionality. Watchdog start/stop is not affected.
  *
  * The following descriptor keys are used:
  *
@@ -236,8 +236,7 @@ static int32 Z47_Init(
 /****************************** Z47_Exit ************************************/
 /** De-initialize hardware and clean up memory
  *
- *  The function deinitializes all channels by setting them as inputs.
- *  The interrupt is disabled.
+ *  The function disables the interrupt.
  *
  *  \param llHdlP     \IN  pointer to low-level driver handle
  *
@@ -255,6 +254,8 @@ static int32 Z47_Exit(
 	/*------------------------------+
 	|  de-init hardware             |
 	+------------------------------*/
+	/* disable interrupt */
+	MWRITE_D32(llHdl->ma, Z47_IRQT, 0);
 
 	/*------------------------------+
 	|  clean up memory              |
@@ -314,7 +315,6 @@ static int32 Z47_Write(
  *
  *  The driver supports \ref getstat_setstat_codes "these status codes"
  *  in addition to the standard codes (see mdis_api.h).
- *  Note: only inputs are able fire an interrupt
  *
  *  \param llHdl         \IN  low-level handle
  *  \param code          \IN  \ref getstat_setstat_codes "status code"
@@ -408,7 +408,10 @@ static int32 Z47_SetStat(
 			break;
 
 		case WDOG_TIME_IRQ:
-			/* given time [us], IP core time [us] */
+			/*
+			 * given time [us], IP core time [us]
+			 * Note: Value>0 enables the interrupt!
+			 */
 			MWRITE_D32(ma, Z47_IRQT, value);
 			break;
 
@@ -498,8 +501,7 @@ static int32 Z47_SetStat(
  *
  *  The driver supports \ref getstat_setstat_codes "these status codes"
  *  in addition to the standard codes (see mdis_api.h).
- *  Getstat Z47_IRQ_LAST_REQUEST will return the last IRQ request mask
- *  and clear it than.
+ *
  *  \param llHdl             \IN  low-level handle
  *  \param code              \IN  \ref getstat_setstat_codes "status code"
  *  \param ch                \IN  current channel
@@ -710,10 +712,9 @@ static int32 Z47_BlockWrite(
 /****************************** Z47_Irq ************************************/
 /** Interrupt service routine
  *
- *  The interrupt is triggered when one or more input ports change state.
- *  Depends on current setting via Z16_IRQ_SENSE.
- *  If the unit is requesting an interrupt, this mask will be stored
- *  for getstat Z47_IRQ_LAST_REQUEST.
+ *  The interrupt is triggered, when a configured IRQ timeout (see #WDOG_TIME_IRQ)
+ *  is reached. The application will be informed about the interrupt, if
+ *  a signal was installed (see #WDOG_IRQ_SIGSET).
  *
  *  If the driver can detect the interrupt's cause it returns
  *  LL_IRQ_DEVICE or LL_IRQ_DEV_NOT, otherwise LL_IRQ_UNKNOWN.
@@ -926,7 +927,7 @@ static int32 Cleanup(
 *   Z47 IP core requires an alternating 0x5A/0xA5 pattern.
 *
 *  \param llHdl      \IN  low-level handle
-*  \param pattern	 \IN  trigger pattern
+*  \param pat        \IN  trigger pattern
 *
 *  \return           \IN  retCode
 */
