@@ -13,9 +13,10 @@
 #   (c) Copyright 2016 by MEN mikro elektronik GmbH, Nuernberg, Germany
 #*****************************************************************************
 
-MAK_NAME=z47
+MAK_NAME=z47_sw
 
-MAK_SWITCH=$(SW_PREFIX)MAC_MEM_MAPPED
+MAK_SWITCH=$(SW_PREFIX)MAC_MEM_MAPPED \
+            $(SW_PREFIX)MAC_BYTESWAP
 
 MAK_LIBS=$(LIB_PREFIX)$(MEN_LIB_DIR)/desc$(LIB_SUFFIX)	\
          $(LIB_PREFIX)$(MEN_LIB_DIR)/oss$(LIB_SUFFIX)	\
