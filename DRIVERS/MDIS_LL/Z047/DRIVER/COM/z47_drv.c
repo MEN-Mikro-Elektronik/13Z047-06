@@ -224,10 +224,8 @@ static int32 Z47_Init(
 	/*------------------------------+
 	|  init hardware                |
 	+------------------------------*/
-	/*  Reset internal counter, WDOG_TIMEOUT, WDOG_IRQ signals
-	    and restart watchdog functionality. Watchdog start/stop is not affected. */
-	MSETMASK_D32(llHdl->ma, Z47_CFG, Z47_CFG_WDOG_RESTART);
-	
+	/* do nothing */
+
 	*llHdlP = llHdl;		/* set low-level driver handle */
 
 	return (ERR_SUCCESS);
@@ -601,6 +599,10 @@ static int32 Z47_GetStat(
 		/*--------------------------+
 		|  new WDOG codes           |
 		+--------------------------*/
+		case WDOG_TRIG_PAT:
+			*value64P = MREAD_D32(llHdl->ma, Z47_CLR);
+			break;
+
 		case WDOG_TIME_MIN:
 			/* IP core time [us], requested time [us] */
 			*value64P = MREAD_D32(ma, Z47_MINT);
@@ -952,7 +954,7 @@ static int32 WdogTrig(
 		/* illegal pattern? */
 		if ((pat != WDOG_TRIGPAT(0)) &&
 			(pat != WDOG_TRIGPAT(1))) {
-			DBGWRT_ERR((DBH, "*** LL - Z17_SetStat(WDOG_TRIG_PAT): illegal pattern 0x%x\n"));
+			DBGWRT_ERR((DBH, "*** LL - Z17_SetStat(WDOG_TRIG_PAT): illegal pattern 0x%x\n", pat));
 			return ERR_LL_ILL_PARAM;
 		}
 
@@ -960,7 +962,7 @@ static int32 WdogTrig(
 		if (read != 0) {
 			/* repeated pattern? */
 			if (pat == read) {
-				DBGWRT_ERR((DBH, "*** LL - Z17_SetStat(WDOG_TRIG_PAT): repeated pattern 0x%x\n"));
+				DBGWRT_ERR((DBH, "*** LL - Z17_SetStat(WDOG_TRIG_PAT): repeated pattern 0x%x\n", pat));
 				return ERR_LL_ILL_PARAM;
 			}
 		}
