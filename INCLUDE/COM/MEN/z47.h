@@ -55,7 +55,7 @@
 
 /* Z47_CFG - Configuration register bits */
 #define Z47_CFG_WDOG_EN				0x0001	/**< Counter enable: 1=enabled */
-#define Z47_CFG_WDOG_RESTART		0x0001	/**< Watchdog Restart: write 1 to restart */
+#define Z47_CFG_WDOG_RESTART		0x0002	/**< Watchdog Restart: write 1 to restart */
 
 #ifdef __cplusplus
 	}
