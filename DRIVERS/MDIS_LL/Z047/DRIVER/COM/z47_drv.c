@@ -416,10 +416,10 @@ static int32 Z47_SetStat(
 		case WDOG_OUT_PIN:
 			switch (value){
 			case 0:
-				MCLRMASK_D32(ma, Z47_STAT, Z47_STAT_SET_WDOG_TOUT);
+				MCLRMASK_D32(ma, Z47_CTRL, Z47_CTRL_SET_WDOG_TOUT);
 			break;
 			case 1:
-				MSETMASK_D32(ma, Z47_STAT, Z47_STAT_SET_WDOG_TOUT);
+				MSETMASK_D32(ma, Z47_CTRL, Z47_CTRL_SET_WDOG_TOUT);
 				break;
 			default:
 				DBGWRT_ERR((DBH, "*** %s(WDOG_OUT_PIN): illegal pattern 0x%x\n",
@@ -435,10 +435,10 @@ static int32 Z47_SetStat(
 		case WDOG_IRQ_PIN:
 			switch (value) {
 			case 0:
-				MCLRMASK_D32(ma, Z47_STAT, Z47_STAT_SET_WDOG_IRQ);
+				MCLRMASK_D32(ma, Z47_CTRL, Z47_CTRL_SET_WDOG_IRQ);
 				break;
 			case 1:
-				MSETMASK_D32(ma, Z47_STAT, Z47_STAT_SET_WDOG_IRQ);
+				MSETMASK_D32(ma, Z47_CTRL, Z47_CTRL_SET_WDOG_IRQ);
 				break;
 			default:
 				DBGWRT_ERR((DBH, "*** %s(WDOG_IRQ_PIN): illegal pattern 0x%x\n",
@@ -472,10 +472,10 @@ static int32 Z47_SetStat(
 		case WDOG_ERR_PIN:
 			switch (value) {
 			case 0:
-				MCLRMASK_D32(ma, Z47_STAT, Z47_STAT_SW_ERR);
+				MCLRMASK_D32(ma, Z47_CTRL, Z47_CTRL_SW_ERR);
 				break;
 			case 1:
-				MSETMASK_D32(ma, Z47_STAT, Z47_STAT_SW_ERR);
+				MSETMASK_D32(ma, Z47_CTRL, Z47_CTRL_SW_ERR);
 				break;
 			default:
 				DBGWRT_ERR((DBH, "*** %s(WDOG_ERR_PIN): illegal pattern 0x%x\n",
@@ -619,8 +619,8 @@ static int32 Z47_GetStat(
 			break;
 
 		case WDOG_OUT_PIN:
-			read = MREAD_D32(ma, Z47_STAT);
-			*value64P = (read & Z47_STAT_SET_WDOG_TOUT) ? 1 : 0;
+			read = MREAD_D32(ma, Z47_CTRL);
+			*value64P = (read & Z47_CTRL_SET_WDOG_TOUT) ? 1 : 0;
 			break;
 
 		case WDOG_OUT_REASON:
@@ -629,8 +629,8 @@ static int32 Z47_GetStat(
 			break;
 
 		case WDOG_IRQ_PIN:
-			read = MREAD_D32(ma, Z47_STAT);
-			*value64P = (read & Z47_STAT_SET_WDOG_IRQ) ? 1 : 0;
+			read = MREAD_D32(ma, Z47_CTRL);
+			*value64P = (read & Z47_CTRL_SET_WDOG_IRQ) ? 1 : 0;
 			break;
 
 		case WDOG_IRQ_REASON:
@@ -639,8 +639,8 @@ static int32 Z47_GetStat(
 			break;
 
 		case WDOG_ERR_PIN:
-			read = MREAD_D32(ma, Z47_STAT);
-			*value64P = (read & Z47_STAT_SW_ERR) ? 1 : 0;
+			read = MREAD_D32(ma, Z47_CTRL);
+			*value64P = (read & Z47_CTRL_SW_ERR) ? 1 : 0;
 			break;
 			
 		/*--------------------------+
