@@ -34,13 +34,13 @@
 		</swmodule>
 		<swmodule>
 			<name>wdog_test</name>
-			<description>Test program for WDOG profile drivers drivers</description>
+			<description>Test program for WDOG profile drivers</description>
 			<type>Common Tool</type>
 			<makefilepath>WDOG/WDOG_TEST/COM/program.mak</makefilepath>
 		</swmodule>
 		<swmodule>
 			<name>wdog_simp</name>
-			<description>Simple example program for WDOG profile drivers drivers</description>
+			<description>Simple example program for WDOG profile drivers</description>
 			<type>Common Tool</type>
 			<makefilepath>WDOG/WDOG_SIMP/COM/program.mak</makefilepath>
 		</swmodule>
