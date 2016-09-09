@@ -581,66 +581,66 @@ static int32 Z47_GetStat(
 		+--------------------------*/
 		case WDOG_TIME:
 			/* IP core time [us], requested time [ms] */
-			*value64P = (MREAD_D32(ma, Z47_MAXT)) / 1000;
+			*valueP = (MREAD_D32(ma, Z47_MAXT)) / 1000;
 			break;
 
 		case WDOG_STATUS:
 			read = MREAD_D32(ma, Z47_STAT);
-			*value64P = (read & Z47_STAT_WDOG_CNT_STATUS) ? 1 : 0;
+			*valueP = (read & Z47_STAT_WDOG_CNT_STATUS) ? 1 : 0;
 			break;
 
 		case WDOG_SHOT:
 			read = MREAD_D32(ma, Z47_STAT);
 			read = (read & Z47_STAT_REASON_TOUT_MASK) >> Z47_STAT_REASON_TOUT_SHIFT;
-			*value64P = ((read == Z47_REASON_MIN_TOUT) ||
-						 (read == Z47_REASON_MAX_TOUT) ) ? 1 : 0;
+			*valueP = ((read == Z47_REASON_MIN_TOUT) ||
+					   (read == Z47_REASON_MAX_TOUT) ) ? 1 : 0;
 			break;
 
 		/*--------------------------+
 		|  new WDOG codes           |
 		+--------------------------*/
 		case WDOG_TRIG_PAT:
-			*value64P = MREAD_D32(llHdl->ma, Z47_CLR);
+			*valueP = MREAD_D32(llHdl->ma, Z47_CLR);
 			break;
 
 		case WDOG_TIME_MIN:
 			/* IP core time [us], requested time [us] */
-			*value64P = MREAD_D32(ma, Z47_MINT);
+			*valueP = MREAD_D32(ma, Z47_MINT);
 			break;
 
 		case WDOG_TIME_MAX:
 			/* IP core time [us], requested time [us] */
-			*value64P = MREAD_D32(ma, Z47_MAXT);
+			*valueP = MREAD_D32(ma, Z47_MAXT);
 			break;
 
 		case WDOG_TIME_IRQ:
 			/* IP core time [us], requested time [us] */
-			*value64P = MREAD_D32(ma, Z47_IRQT);
+			*valueP = MREAD_D32(ma, Z47_IRQT);
 			break;
 
 		case WDOG_OUT_PIN:
 			read = MREAD_D32(ma, Z47_CTRL);
-			*value64P = (read & Z47_CTRL_SET_WDOG_TOUT) ? 1 : 0;
+			*valueP = (read & Z47_CTRL_SET_WDOG_TOUT) ? 1 : 0;
 			break;
 
 		case WDOG_OUT_REASON:
 			read = MREAD_D32(ma, Z47_STAT);
-			*value64P = (read & Z47_STAT_REASON_TOUT_MASK) >> Z47_STAT_REASON_TOUT_SHIFT;
+			*valueP = (read & Z47_STAT_REASON_TOUT_MASK) >> Z47_STAT_REASON_TOUT_SHIFT;
 			break;
 
 		case WDOG_IRQ_PIN:
 			read = MREAD_D32(ma, Z47_CTRL);
-			*value64P = (read & Z47_CTRL_SET_WDOG_IRQ) ? 1 : 0;
+			*valueP = (read & Z47_CTRL_SET_WDOG_IRQ) ? 1 : 0;
 			break;
 
 		case WDOG_IRQ_REASON:
 			read = MREAD_D32(ma, Z47_STAT);
-			*value64P = (read & Z47_STAT_REASON_IRQ_MASK) >> Z47_STAT_REASON_IRQ_SHIFT;
+			*valueP = (read & Z47_STAT_REASON_IRQ_MASK) >> Z47_STAT_REASON_IRQ_SHIFT;
 			break;
 
 		case WDOG_ERR_PIN:
 			read = MREAD_D32(ma, Z47_CTRL);
-			*value64P = (read & Z47_CTRL_SW_ERR) ? 1 : 0;
+			*valueP = (read & Z47_CTRL_SW_ERR) ? 1 : 0;
 			break;
 			
 		/*--------------------------+
