@@ -74,25 +74,19 @@
     \n \section api_functions Supported API Functions
 
     <table border="0">
-    <tr>
-    <td><b>API Function</b></td>
-    <td><b>Functionality</b></td>
-    <td><b>Corresponding Low - Level Function</b></td></tr>
-
-    <tr><td>M_open()</td><td>Open device</td><td>Z47_Init()</td></tr>
-
-    <tr><td>M_close()      </td><td>Close device          </td><td>Z47_Exit())   </td></tr>
-    <tr><td>M_setstat()    </td><td>Set device parameter  </td><td>Z47_SetStat() </td></tr>
-    <tr><td>M_getstat()    </td><td>Get device parameter  </td><td>Z47_GetStat() </td></tr>
-    <tr><td>M_errstringTs()</td><td>Generate error message</td><td>-             </td></tr>
-	<tr><td>-              </td><td>Interrupt Handling    </td><td>Z47_Irq()     </td></tr>
+    <tr><td><b>API Function</b></td> <td><b>Functionality</b></td>   <td><b>Corresponding Low - Level Function</b></td></tr>
+    <tr><td>M_open()</td>            <td>Open device</td>            <td>Z47_Init()</td></tr>
+    <tr><td>M_close()</td>           <td>Close device</td>           <td>Z47_Exit()</td></tr>
+    <tr><td>M_setstat()</td>         <td>Set device parameter</td>   <td>Z47_SetStat()</td></tr>
+    <tr><td>M_getstat()</td>         <td>Get device parameter</td>   <td>Z47_GetStat()</td></tr>
+    <tr><td>M_errstringTs()</td>     <td>Generate error message</td> <td>-</td></tr>
+	<tr><td>-</td>                   <td>Interrupt Handling</td>     <td>Z47_Irq()</td></tr>
 	</table>
 
 
     \n \section getstat_setstat_codes Getstat / Setstat codes
 
-    For the watchdog functionality, the driver supports the WDOG
-    Getstat / Setstat codes(defined in wdog.h) :
+    The driver supports the following Getstat / Setstat codes (defined in wdog.h):
     - #WDOG_START
     - #WDOG_STOP
     - #WDOG_TRIG

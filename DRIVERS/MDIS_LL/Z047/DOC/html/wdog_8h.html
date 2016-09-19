@@ -53,7 +53,7 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">S: Reset watchdog controller (counter, output/IRQ pin). </em> <a href="#a7"></a><em><br><br></td></tr>
 <tr><td class="memItemLeft" nowrap align=right valign=top>#define&nbsp;</td><td class="memItemRight" valign=bottom><a class="el" href="wdog_8h.html#a8">WDOG_TRIG_PAT</a>&nbsp;&nbsp;&nbsp;M_DEV_OF+0xf1</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">S: Trigger watchdog with pattern. </em> <a href="#a8"></a><em><br><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">G,S: Trigger watchdog with pattern get last used pattern. </em> <a href="#a8"></a><em><br><br></td></tr>
 <tr><td class="memItemLeft" nowrap align=right valign=top>#define&nbsp;</td><td class="memItemRight" valign=bottom><a class="el" href="wdog_8h.html#a9">WDOG_TIME_MIN</a>&nbsp;&nbsp;&nbsp;M_DEV_OF+0xf2</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">G,S: Get-/Set watchdog MIN time [us]. </em> <a href="#a9"></a><em><br><br></td></tr>
@@ -151,9 +151,9 @@ G,S: 0=clear, 1=set error pin.
 <p>
 
 <p>
-Definition at line <a class="el" href="wdog_8h-source.html#l00090">90</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
+Definition at line <a class="el" href="wdog_8h-source.html#l00091">91</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00350">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00515">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a14" doxytag="wdog.h::WDOG_IRQ_PIN"></a><p>
@@ -179,9 +179,9 @@ G,S: 0=clear, 1=set IRQ pin.
 <p>
 
 <p>
-Definition at line <a class="el" href="wdog_8h-source.html#l00081">81</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
+Definition at line <a class="el" href="wdog_8h-source.html#l00082">82</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00350">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00515">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a17" doxytag="wdog.h::WDOG_IRQ_REASON"></a><p>
@@ -207,9 +207,9 @@ G,S: get/clear reason of IRQ pin trigger since power-up: 0=not triggered 1 is un
 <p>
 
 <p>
-Definition at line <a class="el" href="wdog_8h-source.html#l00084">84</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
+Definition at line <a class="el" href="wdog_8h-source.html#l00085">85</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00350">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00515">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a16" doxytag="wdog.h::WDOG_IRQ_SIGCLR"></a><p>
@@ -235,9 +235,9 @@ S: Uninstall signal.
 <p>
 
 <p>
-Definition at line <a class="el" href="wdog_8h-source.html#l00083">83</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
+Definition at line <a class="el" href="wdog_8h-source.html#l00084">84</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a15" doxytag="wdog.h::WDOG_IRQ_SIGSET"></a><p>
@@ -263,9 +263,9 @@ S: Install signal to be sent on IRQ.
 <p>
 
 <p>
-Definition at line <a class="el" href="wdog_8h-source.html#l00082">82</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
+Definition at line <a class="el" href="wdog_8h-source.html#l00083">83</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a12" doxytag="wdog.h::WDOG_OUT_PIN"></a><p>
@@ -291,9 +291,9 @@ G,S: 0=clear, 1=set output pin.
 <p>
 
 <p>
-Definition at line <a class="el" href="wdog_8h-source.html#l00074">74</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
+Definition at line <a class="el" href="wdog_8h-source.html#l00075">75</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00350">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00515">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a13" doxytag="wdog.h::WDOG_OUT_REASON"></a><p>
@@ -319,9 +319,9 @@ G,S: get/clear reason of last output pin trigger since power-up: 0=not triggered
 <p>
 
 <p>
-Definition at line <a class="el" href="wdog_8h-source.html#l00075">75</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
+Definition at line <a class="el" href="wdog_8h-source.html#l00076">76</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00350">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00515">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a7" doxytag="wdog.h::WDOG_RESET_CTRL"></a><p>
@@ -349,7 +349,7 @@ S: Reset watchdog controller (counter, output/IRQ pin).
 <p>
 Definition at line <a class="el" href="wdog_8h-source.html#l00068">68</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00472">SignalHandler()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00544">SignalHandler()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a6" doxytag="wdog.h::WDOG_SHOT"></a><p>
@@ -377,7 +377,7 @@ G : Get watchdog shot info: 0=no wdog shot 1=wdog shot 255=not identifiable.
 <p>
 Definition at line <a class="el" href="wdog_8h-source.html#l00062">62</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00350">GetInfo()</a>, <a class="el" href="wdog__test_8c-source.html#l00103">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00515">Z47_GetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__test_8c-source.html#l00103">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a1" doxytag="wdog.h::WDOG_START"></a><p>
@@ -405,7 +405,7 @@ S: Enable watchdog counter.
 <p>
 Definition at line <a class="el" href="wdog_8h-source.html#l00056">56</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a5" doxytag="wdog.h::WDOG_STATUS"></a><p>
@@ -433,7 +433,7 @@ G : Get watchdog counter state (0=disabled, 1=enabled).
 <p>
 Definition at line <a class="el" href="wdog_8h-source.html#l00060">60</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00350">GetInfo()</a>, <a class="el" href="wdog__test_8c-source.html#l00103">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00515">Z47_GetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__test_8c-source.html#l00103">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a3" doxytag="wdog.h::WDOG_STOP"></a><p>
@@ -461,7 +461,7 @@ S: Disable watchdog counter.
 <p>
 Definition at line <a class="el" href="wdog_8h-source.html#l00058">58</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a4" doxytag="wdog.h::WDOG_TIME"></a><p>
@@ -489,7 +489,7 @@ G,S: Get-/Set watchdog MAX time [ms].
 <p>
 Definition at line <a class="el" href="wdog_8h-source.html#l00059">59</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00350">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00515">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a11" doxytag="wdog.h::WDOG_TIME_IRQ"></a><p>
@@ -515,9 +515,9 @@ G,S: Get-/Set Watchdog IRQ time [us].
 <p>
 
 <p>
-Definition at line <a class="el" href="wdog_8h-source.html#l00073">73</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
+Definition at line <a class="el" href="wdog_8h-source.html#l00074">74</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00350">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00515">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a10" doxytag="wdog.h::WDOG_TIME_MAX"></a><p>
@@ -543,9 +543,9 @@ G,S: Get-/Set watchdog MAX time [us].
 <p>
 
 <p>
-Definition at line <a class="el" href="wdog_8h-source.html#l00072">72</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
+Definition at line <a class="el" href="wdog_8h-source.html#l00073">73</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00350">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00515">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a9" doxytag="wdog.h::WDOG_TIME_MIN"></a><p>
@@ -571,9 +571,9 @@ G,S: Get-/Set watchdog MIN time [us].
 <p>
 
 <p>
-Definition at line <a class="el" href="wdog_8h-source.html#l00071">71</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
+Definition at line <a class="el" href="wdog_8h-source.html#l00072">72</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00350">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00515">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a2" doxytag="wdog.h::WDOG_TRIG"></a><p>
@@ -601,7 +601,7 @@ S: Clear watchdog counter.
 <p>
 Definition at line <a class="el" href="wdog_8h-source.html#l00057">57</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a8" doxytag="wdog.h::WDOG_TRIG_PAT"></a><p>
@@ -623,13 +623,13 @@ Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, 
     <td>
 
 <p>
-S: Trigger watchdog with pattern. 
+G,S: Trigger watchdog with pattern get last used pattern. 
 <p>
 
 <p>
 Definition at line <a class="el" href="wdog_8h-source.html#l00070">70</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00326">Z47_SetStat()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00414">GetInfo()</a>, <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, <a class="el" href="z47__drv_8c-source.html#l00513">Z47_GetStat()</a>, and <a class="el" href="z47__drv_8c-source.html#l00324">Z47_SetStat()</a>.    </td>
   </tr>
 </table>
 <a name="a19" doxytag="wdog.h::WDOG_TRIGPAT"></a><p>
@@ -659,9 +659,9 @@ Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, 
 <dl compact><dt><b>Examples: </b></dt><dd>
 <a class="el" href="wdog__ctrl_8c-example.html#a5">wdog_ctrl.c</a>.</dl>
 <p>
-Definition at line <a class="el" href="wdog_8h-source.html#l00099">99</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
+Definition at line <a class="el" href="wdog_8h-source.html#l00100">100</a> of file <a class="el" href="wdog_8h-source.html">wdog.h</a>.
 <p>
-Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00100">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00934">WdogTrig()</a>.    </td>
+Referenced by <a class="el" href="wdog__ctrl_8c-source.html#l00102">main()</a>, and <a class="el" href="z47__drv_8c-source.html#l00936">WdogTrig()</a>.    </td>
   </tr>
 </table>
 

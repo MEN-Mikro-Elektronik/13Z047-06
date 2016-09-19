@@ -68,34 +68,34 @@
 00067 <span class="preprocessor"></span><span class="comment">/* ----------- additional codes since 2016 ----------- */</span>
 <a name="l00068"></a><a class="code" href="wdog_8h.html#a7">00068</a> <span class="preprocessor">#define WDOG_RESET_CTRL M_DEV_OF+0xf0       </span>
 <a name="l00070"></a><a class="code" href="wdog_8h.html#a8">00070</a> <span class="preprocessor">#define WDOG_TRIG_PAT   M_DEV_OF+0xf1       </span>
-<a name="l00071"></a><a class="code" href="wdog_8h.html#a9">00071</a> <span class="preprocessor">#define WDOG_TIME_MIN   M_DEV_OF+0xf2       </span>
-<a name="l00072"></a><a class="code" href="wdog_8h.html#a10">00072</a> <span class="preprocessor">#define WDOG_TIME_MAX   M_DEV_OF+0xf3       </span>
-<a name="l00073"></a><a class="code" href="wdog_8h.html#a11">00073</a> <span class="preprocessor">#define WDOG_TIME_IRQ   M_DEV_OF+0xf4       </span>
-<a name="l00074"></a><a class="code" href="wdog_8h.html#a12">00074</a> <span class="preprocessor">#define WDOG_OUT_PIN    M_DEV_OF+0xf5       </span>
-<a name="l00075"></a><a class="code" href="wdog_8h.html#a13">00075</a> <span class="preprocessor">#define WDOG_OUT_REASON M_DEV_OF+0xf6       </span>
-<a name="l00081"></a><a class="code" href="wdog_8h.html#a14">00081</a> <span class="preprocessor">#define WDOG_IRQ_PIN    M_DEV_OF+0xf7       </span>
-<a name="l00082"></a><a class="code" href="wdog_8h.html#a15">00082</a> <span class="preprocessor">#define WDOG_IRQ_SIGSET M_DEV_OF+0xf8       </span>
-<a name="l00083"></a><a class="code" href="wdog_8h.html#a16">00083</a> <span class="preprocessor">#define WDOG_IRQ_SIGCLR M_DEV_OF+0xf9       </span>
-<a name="l00084"></a><a class="code" href="wdog_8h.html#a17">00084</a> <span class="preprocessor">#define WDOG_IRQ_REASON M_DEV_OF+0xfa       </span>
-<a name="l00090"></a><a class="code" href="wdog_8h.html#a18">00090</a> <span class="preprocessor">#define WDOG_ERR_PIN    M_DEV_OF+0xfb       </span>
-00092 <span class="preprocessor"></span><span class="comment">/*</span>
-00093 <span class="comment"> * Trigger pattern for WDOG_TRIG_PAT SetStat.</span>
-00094 <span class="comment"> *</span>
-00095 <span class="comment"> * Alternating 0x5A/0xA5 pattern required for Z47 IP core and defined here</span>
-00096 <span class="comment"> * for common WDOG_TRIG_PAT SetStat. Should be mapped within other WDOG drivers</span>
-00097 <span class="comment"> * to device specific patterns (if neccessary).</span>
-00098 <span class="comment"> */</span>
-<a name="l00099"></a><a class="code" href="wdog_8h.html#a19">00099</a> <span class="preprocessor">#define WDOG_TRIGPAT(n)     (((n)==0) ? 0x5A : 0xA5)</span>
-00100 <span class="preprocessor"></span>
-00102 <span class="preprocessor">#ifdef __cplusplus</span>
-00103 <span class="preprocessor"></span>}
-00104 <span class="preprocessor">#endif</span>
-00105 <span class="preprocessor"></span>
-00106 <span class="preprocessor">#endif </span><span class="comment">/* WDOG_H */</span>
-00107 
+<a name="l00072"></a><a class="code" href="wdog_8h.html#a9">00072</a> <span class="preprocessor">#define WDOG_TIME_MIN   M_DEV_OF+0xf2       </span>
+<a name="l00073"></a><a class="code" href="wdog_8h.html#a10">00073</a> <span class="preprocessor">#define WDOG_TIME_MAX   M_DEV_OF+0xf3       </span>
+<a name="l00074"></a><a class="code" href="wdog_8h.html#a11">00074</a> <span class="preprocessor">#define WDOG_TIME_IRQ   M_DEV_OF+0xf4       </span>
+<a name="l00075"></a><a class="code" href="wdog_8h.html#a12">00075</a> <span class="preprocessor">#define WDOG_OUT_PIN    M_DEV_OF+0xf5       </span>
+<a name="l00076"></a><a class="code" href="wdog_8h.html#a13">00076</a> <span class="preprocessor">#define WDOG_OUT_REASON M_DEV_OF+0xf6       </span>
+<a name="l00082"></a><a class="code" href="wdog_8h.html#a14">00082</a> <span class="preprocessor">#define WDOG_IRQ_PIN    M_DEV_OF+0xf7       </span>
+<a name="l00083"></a><a class="code" href="wdog_8h.html#a15">00083</a> <span class="preprocessor">#define WDOG_IRQ_SIGSET M_DEV_OF+0xf8       </span>
+<a name="l00084"></a><a class="code" href="wdog_8h.html#a16">00084</a> <span class="preprocessor">#define WDOG_IRQ_SIGCLR M_DEV_OF+0xf9       </span>
+<a name="l00085"></a><a class="code" href="wdog_8h.html#a17">00085</a> <span class="preprocessor">#define WDOG_IRQ_REASON M_DEV_OF+0xfa       </span>
+<a name="l00091"></a><a class="code" href="wdog_8h.html#a18">00091</a> <span class="preprocessor">#define WDOG_ERR_PIN    M_DEV_OF+0xfb       </span>
+00093 <span class="preprocessor"></span><span class="comment">/*</span>
+00094 <span class="comment"> * Trigger pattern for WDOG_TRIG_PAT SetStat.</span>
+00095 <span class="comment"> *</span>
+00096 <span class="comment"> * Alternating 0x5A/0xA5 pattern required for Z47 IP core and defined here</span>
+00097 <span class="comment"> * for common WDOG_TRIG_PAT SetStat. Should be mapped within other WDOG drivers</span>
+00098 <span class="comment"> * to device specific patterns (if neccessary).</span>
+00099 <span class="comment"> */</span>
+<a name="l00100"></a><a class="code" href="wdog_8h.html#a19">00100</a> <span class="preprocessor">#define WDOG_TRIGPAT(n)     (((n)==0) ? 0x5A : 0xA5)</span>
+00101 <span class="preprocessor"></span>
+00103 <span class="preprocessor">#ifdef __cplusplus</span>
+00104 <span class="preprocessor"></span>}
+00105 <span class="preprocessor">#endif</span>
+00106 <span class="preprocessor"></span>
+00107 <span class="preprocessor">#endif </span><span class="comment">/* WDOG_H */</span>
 00108 
 00109 
 00110 
+00111 
 </pre></div>
 	</div>
 </div>

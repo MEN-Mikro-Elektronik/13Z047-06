@@ -80,21 +80,23 @@
     printf(<span class="stringliteral">"    -r         reset wdog (counter, output/irq pin)                  \n"</span>);
     printf(<span class="stringliteral">"    -c         clear reason of last output/irq pin assertion         \n"</span>);
     printf(<span class="stringliteral">"               -------------- Time Setting -------------------       \n"</span>);
-    printf(<span class="stringliteral">"    -u=&lt;ms&gt;    set wdog max/upper time [ms]             [0]          \n"</span>);
+    printf(<span class="stringliteral">"    -u=&lt;ms&gt;    set wdog max/upper time [ms]                          \n"</span>);
     printf(<span class="stringliteral">"                 0 disables the upper limit                          \n"</span>);
-    printf(<span class="stringliteral">"    -l=&lt;ms&gt;    set wdog min/lower time [ms]             [0]          \n"</span>);
+    printf(<span class="stringliteral">"    -l=&lt;ms&gt;    set wdog min/lower time [ms]                          \n"</span>);
     printf(<span class="stringliteral">"                 0 disables the lower limit                          \n"</span>);
     printf(<span class="stringliteral">"    -q=&lt;ms&gt;    set wdog irq time [ms]                                \n"</span>);
-    printf(<span class="stringliteral">"                 0 disables the irq usage               [0]          \n"</span>);
+    printf(<span class="stringliteral">"                 0 disables the irq usage                            \n"</span>);
     printf(<span class="stringliteral">"               -------------- Manual Switching -------------------   \n"</span>);
     printf(<span class="stringliteral">"    -o=&lt;0,1&gt;   0=clear, 1=set output pin                             \n"</span>);
     printf(<span class="stringliteral">"    -i=&lt;0,1&gt;   0=clear, 1=set irq pin                                \n"</span>);
     printf(<span class="stringliteral">"    -e=&lt;0,1&gt;   0=clear, 1=set error pin                              \n"</span>);
     printf(<span class="stringliteral">"               -------------- Loop Operations -------------------    \n"</span>);
     printf(<span class="stringliteral">"    -T=&lt;ms&gt;    start wdog, trigger all &lt;ms&gt; until keypress, stop wdog\n"</span>);
-    printf(<span class="stringliteral">"    -P=&lt;ms&gt;    same as -t but trigger with alternating pattern\n"</span>);
-    printf(<span class="stringliteral">"    -I=&lt;ms&gt;    increment trigger time at each loop pass [0]\n"</span>);
-    printf(<span class="stringliteral">"    -R=&lt;ms&gt;    reset wdog at irq signal after &lt;ms&gt;\n"</span>);
+    printf(<span class="stringliteral">"    -P=&lt;ms&gt;    same as -t but trigger with alternating pattern       \n"</span>);
+    printf(<span class="stringliteral">"    -I=&lt;ms&gt;    increment trigger time at each loop pass [0]          \n"</span>);
+    printf(<span class="stringliteral">"    -R=&lt;ms&gt;    reset wdog at irq signal after &lt;ms&gt;                   \n"</span>);
+    printf(<span class="stringliteral">"    -A=&lt;n&gt;     abort after n passes                                  \n"</span>);
+    printf(<span class="stringliteral">"    -V         verbose output                                        \n"</span>);
     printf(<span class="stringliteral">"\n"</span>);
     printf(<span class="stringliteral">"(c)Copyright 2016 by MEN Mikro Elektronik GmbH (%s)\n"</span>, __DATE__);
 }
@@ -105,13 +107,15 @@
     <span class="keywordtype">char</span>    *device, *str, *errstr, buf[40];
     u_int32 n, count = 0;
     int32   get, reset, clear, maxT, minT, irqT, outP, irqP, errP;
-    int32   trig, trigPat, trigT, incrT, pat;
+    int32   trig, trigPat, trigT, incrT, pat, patIdx=0;
+    int32   abort, loop, loopcnt, verbose;
+
     <span class="keywordtype">int</span>     ret=<a class="code" href="wdog__ctrl_8c.html#a0">ERR_OK</a>;
 
     <span class="comment">/*----------------------+</span>
 <span class="comment">    |  check arguments      |</span>
 <span class="comment">    +----------------------*/</span>
-    <span class="keywordflow">if</span> ((errstr = UTL_ILLIOPT(<span class="stringliteral">"grcu=l=q=o=i=e=T=P=I=R=?"</span>, buf))) {
+    <span class="keywordflow">if</span> ((errstr = UTL_ILLIOPT(<span class="stringliteral">"grcu=l=q=o=i=e=T=P=I=R=A=V?"</span>, buf))) {
         printf(<span class="stringliteral">"*** %s\n"</span>, errstr);
         <span class="keywordflow">return</span> <a class="code" href="wdog__ctrl_8c.html#a1">ERR_PARAM</a>;
     }
@@ -119,7 +123,7 @@
         <a class="code" href="wdog__ctrl_8c.html#a7">usage</a>();
         <span class="keywordflow">return</span> <a class="code" href="wdog__ctrl_8c.html#a1">ERR_PARAM</a>;
     }
-    <span class="keywordflow">if</span> (argc &lt; 2) {
+    <span class="keywordflow">if</span> (argc &lt; 3) {
         <a class="code" href="wdog__ctrl_8c.html#a7">usage</a>();
         <span class="keywordflow">return</span> <a class="code" href="wdog__ctrl_8c.html#a1">ERR_PARAM</a>;
     }
@@ -141,9 +145,9 @@
     get     = (UTL_TSTOPT(<span class="stringliteral">"g"</span>) ? 1 : 0);
     reset   = (UTL_TSTOPT(<span class="stringliteral">"r"</span>) ? 1 : 0);
     clear   = (UTL_TSTOPT(<span class="stringliteral">"c"</span>) ? 1 : 0);
-    maxT    = ((str = UTL_TSTOPT(<span class="stringliteral">"u="</span>)) ? atoi(str) : 0);
-    minT    = ((str = UTL_TSTOPT(<span class="stringliteral">"l="</span>)) ? atoi(str) : 0);
-    irqT    = ((str = UTL_TSTOPT(<span class="stringliteral">"q="</span>)) ? atoi(str) : 0);
+    maxT    = ((str = UTL_TSTOPT(<span class="stringliteral">"u="</span>)) ? atoi(str) : -1);
+    minT    = ((str = UTL_TSTOPT(<span class="stringliteral">"l="</span>)) ? atoi(str) : -1);
+    irqT    = ((str = UTL_TSTOPT(<span class="stringliteral">"q="</span>)) ? atoi(str) : -1);
     outP    = ((str = UTL_TSTOPT(<span class="stringliteral">"o="</span>)) ? atoi(str) : -1);
     irqP    = ((str = UTL_TSTOPT(<span class="stringliteral">"i="</span>)) ? atoi(str) : -1);
     errP    = ((str = UTL_TSTOPT(<span class="stringliteral">"e="</span>)) ? atoi(str) : -1);
@@ -151,7 +155,9 @@
     trigPat = ((str = UTL_TSTOPT(<span class="stringliteral">"P="</span>)) ? atoi(str) : -1);
     incrT   = ((str = UTL_TSTOPT(<span class="stringliteral">"I="</span>)) ? atoi(str) : 0);
     G_rst   = ((str = UTL_TSTOPT(<span class="stringliteral">"R="</span>)) ? atoi(str) : -1);
-    
+    abort   = ((str = UTL_TSTOPT(<span class="stringliteral">"A="</span>)) ? atoi(str) : -1);
+    verbose = (UTL_TSTOPT(<span class="stringliteral">"V"</span>) ? 1 : 0);
+
     <span class="comment">/* further parameter checking */</span>
     <span class="keywordflow">if</span> ((trig != -1) &amp;&amp; (trigPat != -1)) {
         printf(<span class="stringliteral">"*** -T and -P specified, this is not supported\n"</span>);
@@ -188,7 +194,7 @@
     <span class="keywordflow">if</span> (reset){
         <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_RESET_CTRL ,0)) &lt; 0) {
             ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_RESET_CTRL"</span>);
-            <span class="keywordflow">goto</span> abort;
+            <span class="keywordflow">goto</span> ABORT;
         }
     }
 
@@ -203,62 +209,68 @@
             ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_IRQ_REASON"</span>);
         }
         <span class="keywordflow">if</span> (ret!=<a class="code" href="wdog__ctrl_8c.html#a0">ERR_OK</a>)
-            <span class="keywordflow">goto</span> abort;
+            <span class="keywordflow">goto</span> ABORT;
     }
 
     <span class="comment">/*----------------------+</span>
 <span class="comment">    |  time setting [ms]    |</span>
 <span class="comment">    +----------------------*/</span>
-    <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_TIME_MAX, maxT / 1000)) &lt; 0) {
-        <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_TIME_MAX"</span>);
+    <span class="keywordflow">if</span> (maxT != -1) {
+        <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_TIME_MAX, maxT * 1000)) &lt; 0) {
+            <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_TIME_MAX"</span>);
 
-        <span class="comment">/* try to set max time with older setstat code */</span>
-        <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_TIME, maxT)) &lt; 0) {
-            ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_TIME"</span>);
-            <span class="keywordflow">goto</span> abort;
+            <span class="comment">/* try to set max time with older setstat code */</span>
+            <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_TIME, maxT)) &lt; 0) {
+                ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_TIME"</span>);
+                <span class="keywordflow">goto</span> ABORT;
+            }
+
+            printf(<span class="stringliteral">"max time set with older setstat code WDOG_TIME\n"</span>);
         }
-
-        printf(<span class="stringliteral">"max time set with older setstat code WDOG_TIME\n"</span>);
     }
 
-    <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_TIME_MIN, minT / 1000)) &lt; 0) {
-        ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_TIME_MIN"</span>);
-        <span class="keywordflow">goto</span> abort;
+    <span class="keywordflow">if</span> (minT != -1) {
+        <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_TIME_MIN, minT * 1000)) &lt; 0) {
+            ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_TIME_MIN"</span>);
+            <span class="keywordflow">goto</span> ABORT;
+        }
     }
 
-    <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_TIME_IRQ, irqT / 1000)) &lt; 0) {
-        ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_TIME_IRQ"</span>);
-        <span class="keywordflow">goto</span> abort;
+    <span class="keywordflow">if</span> (irqT != -1) {
+        <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_TIME_IRQ, irqT * 1000)) &lt; 0) {
+            ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_TIME_IRQ"</span>);
+            <span class="keywordflow">goto</span> ABORT;
+        }
     }
 
     <span class="comment">/*----------------------+</span>
 <span class="comment">    |  manual switching     |</span>
 <span class="comment">    +----------------------*/</span>
-    <span class="keywordflow">if</span> (outP) {
+    <span class="keywordflow">if</span> (outP != -1) {
         <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_OUT_PIN, outP)) &lt; 0) {
             ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_OUT_PIN"</span>);
-            <span class="keywordflow">goto</span> abort;
+            <span class="keywordflow">goto</span> ABORT;
         }
     }
 
-    <span class="keywordflow">if</span> (irqP) {
+    <span class="keywordflow">if</span> (irqP != -1) {
         <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_IRQ_PIN, irqP)) &lt; 0) {
             ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_IRQ_PIN"</span>);
-            <span class="keywordflow">goto</span> abort;
+            <span class="keywordflow">goto</span> ABORT;
         }
     }
 
-    <span class="keywordflow">if</span> (errP) {
+    <span class="keywordflow">if</span> (errP != -1) {
         <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_ERR_PIN, errP)) &lt; 0) {
             ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_ERR_PIN"</span>);
-            <span class="keywordflow">goto</span> abort;
+            <span class="keywordflow">goto</span> ABORT;
         }
     }
 
     <span class="comment">/*----------------------+</span>
 <span class="comment">    |  configure interrupt  |</span>
 <span class="comment">    +----------------------*/</span>
-    <span class="keywordflow">if</span> (irqT){
+    <span class="keywordflow">if</span> (irqT != -1){
                     
         <span class="comment">/* install signal handler */</span>
         UOS_SigInit( SignalHandler );
@@ -266,13 +278,13 @@
             
         <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_IRQ_SIGSET, UOS_SIG_USR1)) &lt; 0) {
             ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_IRQ_SIGSET"</span>);
-            <span class="keywordflow">goto</span> abort;
+            <span class="keywordflow">goto</span> ABORT;
         }   
 
         <span class="comment">/* enable interrupt */</span>
         <span class="keywordflow">if</span> ((M_setstat(G_path, M_MK_IRQ_ENABLE, TRUE)) &lt; 0) {
             ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat M_MK_IRQ_ENABLE"</span>);
-            <span class="keywordflow">goto</span> abort;
+            <span class="keywordflow">goto</span> ABORT;
         }
     }
 
@@ -285,12 +297,30 @@
     <span class="comment">/*--------------------+</span>
 <span class="comment">    |  watch              |</span>
 <span class="comment">    +--------------------*/</span>
-    <span class="keywordflow">if</span> ( trigT != -1 ){
+    loopcnt = 0;
+    loop = 1;
+    <span class="keywordflow">if</span> (trigT != -1){
+
+        <span class="comment">/* trigger with pattern */</span>
+        <span class="keywordflow">if</span> (trigPat != -1) {
+
+            <span class="comment">/* get last used pattern */</span>
+            <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_TRIG_PAT, &amp;pat)) &lt; 0) {
+                <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"getstat WDOG_TRIG_PAT"</span>);
+                <span class="keywordflow">goto</span> ABORT;
+            }
+
+            <span class="comment">/* compute initial pattern to use */</span>
+            <span class="keywordflow">if</span>( pat == <a name="a5"></a><a class="code" href="wdog_8h.html#a19">WDOG_TRIGPAT</a>(0))
+                patIdx = 1;
+            <span class="keywordflow">else</span>
+                patIdx = 0;
+        }
 
         <span class="comment">/* start watchdog */</span>
         <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_START, 0)) &lt; 0) {
             <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_START"</span>);
-            <span class="keywordflow">goto</span> abort;
+            <span class="keywordflow">goto</span> ABORT;
         }
         printf(<span class="stringliteral">"Watchdog started - trigger all %dmsec\n"</span>, trigT);
 
@@ -301,34 +331,56 @@
 
             <span class="comment">/* trigger with pattern */</span>
             <span class="keywordflow">if</span> (trigPat != -1){
-                pat = <a name="a5"></a><a class="code" href="wdog_8h.html#a19">WDOG_TRIGPAT</a>(count &amp; 1);
-                printf(<span class="stringliteral">"#%06d: Trigger watchdog with pattern 0x%x after %dms (press any key to abort)\n"</span>,
-                    count, pat, trigT);
+                pat = <a class="code" href="wdog_8h.html#a19">WDOG_TRIGPAT</a>(patIdx);
+                <span class="keywordflow">if</span> (verbose)
+                    printf(<span class="stringliteral">"#%06d: Trigger watchdog with pattern 0x%x after %dms (press any key to abort)\n"</span>,
+                        count, pat, trigT);
                 <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_TRIG_PAT, pat)) &lt; 0) {
                     <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_TRIG_PAT"</span>);
-                    <span class="keywordflow">goto</span> abort;
+                    <span class="keywordflow">goto</span> ABORT;
                 }
+                patIdx ^= 1;
             }
             <span class="comment">/* trigger without pattern */</span>
             <span class="keywordflow">else</span> {
-                printf(<span class="stringliteral">"#%06d: Trigger watchdog after %dms (press any key to abort)\n"</span>,
-                    count, trigT);
+                <span class="keywordflow">if</span> (verbose)
+                    printf(<span class="stringliteral">"#%06d: Trigger watchdog after %dms (press any key to abort)\n"</span>,
+                        count, trigT);
                 <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_TRIG, 0)) &lt; 0) {
                     <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_TRIG"</span>);
-                    <span class="keywordflow">goto</span> abort;
+                    <span class="keywordflow">goto</span> ABORT;
                 }
+            }
+
+            <span class="keywordflow">if</span> (!verbose) {
+                printf(<span class="stringliteral">"."</span>);
+                fflush(stdout);
             }
 
             <span class="comment">/* increment delay for next pass */</span>
             <span class="keywordflow">if</span> (incrT)
                 trigT += incrT;
 
-        } <span class="keywordflow">while</span> (UOS_KeyPressed() == -1);
+            <span class="comment">/* repeat until keypress */</span>
+            <span class="keywordflow">if</span> (UOS_KeyPressed() != -1)
+                loop = 0;
+
+            <span class="comment">/* abort after n passes */</span>
+            <span class="keywordflow">if</span> (abort){
+                loopcnt++;
+                <span class="keywordflow">if</span> (loopcnt==abort)
+                    loop = 0;
+            }
+                    
+        } <span class="keywordflow">while</span> (loop);
+
+        <span class="keywordflow">if</span> (!verbose)
+            printf(<span class="stringliteral">"\n"</span>);
 
         <span class="comment">/* try to stop watchdog */</span>
         <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_STOP, 0)) &lt; 0) {
             <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_STOP"</span>);
-            <span class="keywordflow">goto</span> abort;
+            <span class="keywordflow">goto</span> ABORT;
         }
         printf(<span class="stringliteral">"Watchdog stopped\n"</span>);
     }
@@ -338,7 +390,19 @@
 <span class="comment">    +----------------------*/</span>
     ret=<a class="code" href="wdog__ctrl_8c.html#a0">ERR_OK</a>;
     
-abort:
+    <span class="keywordflow">if</span> (irqT != -1) {
+        <span class="keywordflow">if</span> ((M_setstat(G_path, WDOG_IRQ_SIGCLR, UOS_SIG_USR1)) &lt; 0) {
+            ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"setstat WDOG_IRQ_SIGCLR"</span>);
+            <span class="keywordflow">goto</span> ABORT;
+        }
+
+        UOS_SigRemove(UOS_SIG_USR1);
+        UOS_SigExit();
+    }
+
+    ret = <a class="code" href="wdog__ctrl_8c.html#a0">ERR_OK</a>;
+
+ABORT:
     <span class="keywordflow">if</span> (M_close(G_path) &lt; 0)
         ret = <a class="code" href="wdog__ctrl_8c.html#a8">PrintError</a>(<span class="stringliteral">"close"</span>);
 
@@ -352,7 +416,7 @@ abort:
     <span class="keywordtype">char</span> *str;
 
     <span class="comment">/* ----------- codes before 2016 ----------- */</span>
-    printf(<span class="stringliteral">"WDOG_TIME       - MAX time: "</span>);
+    printf(<span class="stringliteral">"WDOG_TIME (MAX time)                  : "</span>);
     <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_TIME, &amp;val)) &lt; 0) {
         <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
     }
@@ -360,7 +424,7 @@ abort:
         printf(<span class="stringliteral">"%dms\n"</span>, val);
     }
 
-    printf(<span class="stringliteral">"WDOG_STATUS     - counter state: "</span>);
+    printf(<span class="stringliteral">"WDOG_STATUS (counter state)           : "</span>);
     <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_STATUS, &amp;val)) &lt; 0) {
         <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
     }
@@ -368,7 +432,7 @@ abort:
         printf(<span class="stringliteral">"%s\n"</span>, val ? <span class="stringliteral">"enabled"</span> : <span class="stringliteral">"disabled"</span>);
     }
 
-    printf(<span class="stringliteral">"WDOG_SHOT       - shot info: "</span>);
+    printf(<span class="stringliteral">"WDOG_SHOT (shot info)                 : "</span>);
     <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_SHOT, &amp;val)) &lt; 0) {
         <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
     }
@@ -383,31 +447,39 @@ abort:
     }
 
     <span class="comment">/* ----------- additional codes since 2016 ----------- */</span>
-    printf(<span class="stringliteral">"WDOG_TIME_MIN   - MIN time: "</span>);
+    printf(<span class="stringliteral">"WDOG_TRIG_PAT (last used pattern)     : "</span>);
+    <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_TRIG_PAT, &amp;val)) &lt; 0) {
+        <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
+    }
+    <span class="keywordflow">else</span> {
+        printf(<span class="stringliteral">"0x%x\n"</span>, val);
+    }
+
+    printf(<span class="stringliteral">"WDOG_TIME_MIN (MIN time)              : "</span>);
     <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_TIME_MIN, &amp;val)) &lt; 0) {
         <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
     }
     <span class="keywordflow">else</span> {
-        printf(<span class="stringliteral">"%dus\n"</span>, val);
+        printf(<span class="stringliteral">"%dms (%dus)\n"</span>, val/1000, val);
     }
 
-    printf(<span class="stringliteral">"WDOG_TIME_MAX   - MAX time: "</span>);
+    printf(<span class="stringliteral">"WDOG_TIME_MAX (MAX time)              : "</span>);
     <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_TIME_MAX, &amp;val)) &lt; 0) {
         <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
     }
     <span class="keywordflow">else</span> {
-        printf(<span class="stringliteral">"%dus\n"</span>, val);
+        printf(<span class="stringliteral">"%dms (%dus)\n"</span>, val / 1000, val);
     }
 
-    printf(<span class="stringliteral">"WDOG_TIME_IRQ   - IRQ time: "</span>);
+    printf(<span class="stringliteral">"WDOG_TIME_IRQ (IRQ time)              : "</span>);
     <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_TIME_IRQ, &amp;val)) &lt; 0) {
         <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
     }
     <span class="keywordflow">else</span> {
-        printf(<span class="stringliteral">"%dus\n"</span>, val);
+        printf(<span class="stringliteral">"%dms (%dus) - may be cleared from drv-exit\n"</span>, val / 1000, val);
     }
 
-    printf(<span class="stringliteral">"WDOG_OUT_PIN    - out pin: "</span>);
+    printf(<span class="stringliteral">"WDOG_OUT_PIN (out pin)                : "</span>);
     <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_OUT_PIN, &amp;val)) &lt; 0) {
         <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
     }
@@ -415,7 +487,7 @@ abort:
         printf(<span class="stringliteral">"%s\n"</span>, val ? <span class="stringliteral">"set"</span> : <span class="stringliteral">"cleared"</span>);
     }
 
-    printf(<span class="stringliteral">"WDOG_OUT_REASON - last out pin reason: "</span>);
+    printf(<span class="stringliteral">"WDOG_OUT_REASON (last out pin reason) : "</span>);
     <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_OUT_REASON, &amp;val)) &lt; 0) {
         <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
     }
@@ -430,7 +502,7 @@ abort:
         printf(<span class="stringliteral">"%s\n"</span>, str);
     }
 
-    printf(<span class="stringliteral">"WDOG_IRQ_PIN    - irq pin: "</span>);
+    printf(<span class="stringliteral">"WDOG_IRQ_PIN (irq pin)                : "</span>);
     <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_IRQ_PIN, &amp;val)) &lt; 0) {
         <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
     }
@@ -438,7 +510,7 @@ abort:
         printf(<span class="stringliteral">"%s\n"</span>, val ? <span class="stringliteral">"set"</span> : <span class="stringliteral">"cleared"</span>);
     }
 
-    printf(<span class="stringliteral">"WDOG_IRQ_REASON - last irq pin reason: "</span>);
+    printf(<span class="stringliteral">"WDOG_IRQ_REASON (last irq pin reason) : "</span>);
     <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_IRQ_REASON, &amp;val)) &lt; 0) {
         <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
     }
@@ -452,7 +524,7 @@ abort:
         printf(<span class="stringliteral">"%s\n"</span>, str);
     }
 
-    printf(<span class="stringliteral">"WDOG_ERR_PIN    - err pin: "</span>);
+    printf(<span class="stringliteral">"WDOG_ERR_PIN (err pin)                : "</span>);
     <span class="keywordflow">if</span> ((M_getstat(G_path, WDOG_ERR_PIN, &amp;val)) &lt; 0) {
         <a class="code" href="wdog__ctrl_8c.html#a3">PRINT_ERR</a>
     }

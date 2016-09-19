@@ -56,27 +56,25 @@ When the first path is opened to an Z47 device, the HW and the driver are being 
 Supported API Functions</h2>
 <table border="0" cellspacing="3" cellpadding="3">
 <tr>
-<td><b>API Function</b> </td><td><b>Functionality</b> </td><td><b>Corresponding Low - Level Function</b><p>
-</td></tr>
+<td><b>API Function</b> </td><td><b>Functionality</b> </td><td><b>Corresponding Low - Level Function</b> </td></tr>
 <tr>
-<td>M_open()</td><td>Open device</td><td><a class="el" href="z47__drv_8c.html#a8">Z47_Init()</a><p>
-</td></tr>
+<td>M_open() </td><td>Open device </td><td><a class="el" href="z47__drv_8c.html#a8">Z47_Init()</a> </td></tr>
 <tr>
-<td>M_close() </td><td>Close device </td><td><a class="el" href="z47__drv_8c.html#a9">Z47_Exit()</a>)  </td></tr>
+<td>M_close() </td><td>Close device </td><td><a class="el" href="z47__drv_8c.html#a9">Z47_Exit()</a> </td></tr>
 <tr>
-<td>M_setstat() </td><td>Set device parameter </td><td><a class="el" href="z47__drv_8c.html#a12">Z47_SetStat()</a>  </td></tr>
+<td>M_setstat() </td><td>Set device parameter </td><td><a class="el" href="z47__drv_8c.html#a12">Z47_SetStat()</a> </td></tr>
 <tr>
-<td>M_getstat() </td><td>Get device parameter </td><td><a class="el" href="z47__drv_8c.html#a13">Z47_GetStat()</a>  </td></tr>
+<td>M_getstat() </td><td>Get device parameter </td><td><a class="el" href="z47__drv_8c.html#a13">Z47_GetStat()</a> </td></tr>
 <tr>
-<td>M_errstringTs()</td><td>Generate error message</td><td>-  </td></tr>
+<td>M_errstringTs() </td><td>Generate error message </td><td>- </td></tr>
 <tr>
-<td>- </td><td>Interrupt Handling </td><td><a class="el" href="z47__drv_8c.html#a16">Z47_Irq()</a>  </td></tr>
+<td>- </td><td>Interrupt Handling </td><td><a class="el" href="z47__drv_8c.html#a16">Z47_Irq()</a> </td></tr>
 </table>
 <p>
 <br>
  <h2><a name="getstat_setstat_codes"></a>
 Getstat / Setstat codes</h2>
-For the watchdog functionality, the driver supports the WDOG Getstat / Setstat codes(defined in <a class="el" href="wdog_8h.html">wdog.h</a>) :<ul>
+The driver supports the following Getstat / Setstat codes (defined in <a class="el" href="wdog_8h.html">wdog.h</a>):<ul>
 <li><a class="el" href="wdog_8h.html#a1">WDOG_START</a></li><li><a class="el" href="wdog_8h.html#a3">WDOG_STOP</a></li><li><a class="el" href="wdog_8h.html#a2">WDOG_TRIG</a></li><li><a class="el" href="wdog_8h.html#a4">WDOG_TIME</a></li><li><a class="el" href="wdog_8h.html#a5">WDOG_STATUS</a></li><li><a class="el" href="wdog_8h.html#a6">WDOG_SHOT</a><br>
 </li><li><a class="el" href="wdog_8h.html#a7">WDOG_RESET_CTRL</a><br>
 </li><li><a class="el" href="wdog_8h.html#a8">WDOG_TRIG_PAT</a><br>

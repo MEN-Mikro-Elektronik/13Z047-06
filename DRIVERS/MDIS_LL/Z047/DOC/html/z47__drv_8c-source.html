@@ -205,609 +205,611 @@
 00224     <span class="comment">/*------------------------------+</span>
 00225 <span class="comment">    |  init hardware                |</span>
 00226 <span class="comment">    +------------------------------*/</span>
-00227     <span class="comment">/*  Reset internal counter, WDOG_TIMEOUT, WDOG_IRQ signals</span>
-00228 <span class="comment">        and restart watchdog functionality. Watchdog start/stop is not affected. */</span>
-00229     MSETMASK_D32(llHdl-&gt;ma, Z47_CFG, Z47_CFG_WDOG_RESTART);
-00230     
-00231     *llHdlP = llHdl;        <span class="comment">/* set low-level driver handle */</span>
-00232 
-00233     <span class="keywordflow">return</span> (ERR_SUCCESS);
-00234 }
-00235 
-00236 <span class="comment">/****************************** Z47_Exit ************************************/</span>
-<a name="l00245"></a><a class="code" href="z47__drv_8c.html#a9">00245</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a9">Z47_Exit</a>(
-00246     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> **llHdlP
-00247 )
-00248 {
-00249     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl = *llHdlP;
-00250     int32 error = 0;
+00227     <span class="comment">/* do nothing */</span>
+00228 
+00229     *llHdlP = llHdl;        <span class="comment">/* set low-level driver handle */</span>
+00230 
+00231     <span class="keywordflow">return</span> (ERR_SUCCESS);
+00232 }
+00233 
+00234 <span class="comment">/****************************** Z47_Exit ************************************/</span>
+<a name="l00243"></a><a class="code" href="z47__drv_8c.html#a9">00243</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a9">Z47_Exit</a>(
+00244     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> **llHdlP
+00245 )
+00246 {
+00247     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl = *llHdlP;
+00248     int32 error = 0;
+00249 
+00250     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_Exit\n"</span>));
 00251 
-00252     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_Exit\n"</span>));
-00253 
-00254     <span class="comment">/*------------------------------+</span>
-00255 <span class="comment">    |  de-init hardware             |</span>
-00256 <span class="comment">    +------------------------------*/</span>
-00257     <span class="comment">/* disable interrupt */</span>
-00258     MWRITE_D32(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>, Z47_IRQT, 0);
-00259 
-00260     <span class="comment">/*------------------------------+</span>
-00261 <span class="comment">    |  clean up memory              |</span>
-00262 <span class="comment">    +------------------------------*/</span>
-00263     *llHdlP = NULL;     <span class="comment">/* set low-level driver handle to NULL */</span>
-00264     error = <a class="code" href="z47__drv_8c.html#a19">Cleanup</a>(llHdl, error);
-00265 
-00266     <span class="keywordflow">return</span> (error);
-00267 }
-00268 
-00269 <span class="comment">/****************************** Z47_Read ************************************/</span>
-<a name="l00280"></a><a class="code" href="z47__drv_8c.html#a10">00280</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a10">Z47_Read</a>(
-00281     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a>  *llHdl,
-00282     int32      ch,
-00283     int32      *valueP
-00284 )
-00285 {
-00286     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_Read: ch=%d\n"</span>, ch));
-00287 
-00288     <span class="keywordflow">return</span>(ERR_LL_ILL_FUNC);
-00289 }
-00290 
-00291 <span class="comment">/****************************** Z47_Write ***********************************/</span>
-<a name="l00302"></a><a class="code" href="z47__drv_8c.html#a11">00302</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a11">Z47_Write</a>(
-00303     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a>  *llHdl,
-00304     int32      ch,
-00305     int32      value
-00306 )
-00307 {
-00308     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_Write: ch=%d  val=0x%x\n"</span>, ch, value));
-00309 
-00310     <span class="keywordflow">return</span>(ERR_LL_ILL_FUNC);
-00311 }
-00312 
-00313 <span class="comment">/****************************** Z47_SetStat *********************************/</span>
-<a name="l00326"></a><a class="code" href="z47__drv_8c.html#a12">00326</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a12">Z47_SetStat</a>(
-00327     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a>   *llHdl,
-00328     int32       code,
-00329     int32       ch,
-00330     INT32_OR_64 value32_or_64
-00331 )
-00332 {
-00333     <span class="keywordtype">char</span> *func = <span class="stringliteral">"LL - Z47_SetStat"</span>;
-00334     int32 value = (int32)value32_or_64;     <span class="comment">/* 32bit value */</span>
-00335     MACCESS ma = llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>;
-00336     int32 error = ERR_SUCCESS;
-00337 
-00338     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"%s: ch=%d code=0x%04x value=0x%x\n"</span>,
-00339                 func, ch, code, value));
-00340 
-00341     <span class="keywordflow">switch</span> (code) {
-00342         <span class="comment">/*--------------------------+</span>
-00343 <span class="comment">        |  debug level              |</span>
-00344 <span class="comment">        +--------------------------*/</span>
-00345         <span class="keywordflow">case</span> M_LL_DEBUG_LEVEL:
-00346             llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o6">dbgLevel</a> = value;
-00347             <span class="keywordflow">break</span>;
-00348         <span class="comment">/*--------------------------+</span>
-00349 <span class="comment">        |  enable interrupts        |</span>
-00350 <span class="comment">        +--------------------------*/</span>
-00351         <span class="keywordflow">case</span> M_MK_IRQ_ENABLE:
-00352             <span class="keywordflow">break</span>;
-00353         <span class="comment">/*--------------------------+</span>
-00354 <span class="comment">        |  set irq counter          |</span>
-00355 <span class="comment">        +--------------------------*/</span>
-00356         <span class="keywordflow">case</span> M_LL_IRQ_COUNT:
-00357             llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o9">irqCount</a> = value;
-00358             <span class="keywordflow">break</span>;
-00359         <span class="comment">/*--------------------------+</span>
-00360 <span class="comment">        |  channel direction        |</span>
-00361 <span class="comment">        +--------------------------*/</span>
-00362         <span class="keywordflow">case</span> M_LL_CH_DIR:
-00363             <span class="keywordflow">if</span> (value != M_CH_INOUT) {
-00364                 error = ERR_LL_ILL_DIR;
-00365             }
-00366             <span class="keywordflow">break</span>;
-00367         <span class="comment">/*--------------------------+</span>
-00368 <span class="comment">        |  old WDOG codes           |</span>
-00369 <span class="comment">        +--------------------------*/</span>
-00370         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a1">WDOG_START</a>:
-00371             MSETMASK_D32(ma, Z47_CFG, Z47_CFG_WDOG_EN);
-00372             llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o10">wdStart</a> = 1;
-00373             <span class="keywordflow">break</span>;
-00374 
-00375         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a3">WDOG_STOP</a>:
-00376             MCLRMASK_D32(ma, Z47_CFG, Z47_CFG_WDOG_EN);
-00377             llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o10">wdStart</a> = 0;
-00378             <span class="keywordflow">break</span>;
-00379 
-00380         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a2">WDOG_TRIG</a>:
-00381             error = <a class="code" href="z47__drv_8c.html#a20">WdogTrig</a>(llHdl, 0);
-00382             <span class="keywordflow">break</span>;
-00383 
-00384         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a4">WDOG_TIME</a>:
-00385             <span class="comment">/* given time [ms], IP core time [us] */</span>
-00386             MWRITE_D32(ma, Z47_MAXT, value * 1000);
-00387             <span class="keywordflow">break</span>;
-00388 
-00389         <span class="comment">/*--------------------------+</span>
-00390 <span class="comment">        |  new WDOG codes           |</span>
-00391 <span class="comment">        +--------------------------*/</span>
-00392         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a7">WDOG_RESET_CTRL</a>:
-00393             MSETMASK_D32(ma, Z47_CFG, Z47_CFG_WDOG_RESTART);
-00394             <span class="keywordflow">break</span>;
-00395 
-00396         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a8">WDOG_TRIG_PAT</a>:
-00397             error = <a class="code" href="z47__drv_8c.html#a20">WdogTrig</a>(llHdl, value);
-00398             <span class="keywordflow">break</span>;
-00399 
-00400         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a9">WDOG_TIME_MIN</a>:
-00401             <span class="comment">/* given time [us], IP core time [us] */</span>
-00402             MWRITE_D32(ma, Z47_MINT, value);
-00403             <span class="keywordflow">break</span>;
-00404 
-00405         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a10">WDOG_TIME_MAX</a>:
-00406             <span class="comment">/* given time [us], IP core time [us] */</span>
-00407             MWRITE_D32(ma, Z47_MAXT, value);
-00408             <span class="keywordflow">break</span>;
-00409 
-00410         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a11">WDOG_TIME_IRQ</a>:
-00411             <span class="comment">/*</span>
-00412 <span class="comment">             * given time [us], IP core time [us]</span>
-00413 <span class="comment">             * Note: Value&gt;0 enables the interrupt!</span>
-00414 <span class="comment">             */</span>
-00415             MWRITE_D32(ma, Z47_IRQT, value);
-00416             <span class="keywordflow">break</span>;
-00417 
-00418         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a12">WDOG_OUT_PIN</a>:
-00419             <span class="keywordflow">switch</span> (value){
-00420             <span class="keywordflow">case</span> 0:
-00421                 MCLRMASK_D32(ma, Z47_STAT, Z47_STAT_SET_WDOG_TOUT);
-00422             <span class="keywordflow">break</span>;
-00423             <span class="keywordflow">case</span> 1:
-00424                 MSETMASK_D32(ma, Z47_STAT, Z47_STAT_SET_WDOG_TOUT);
-00425                 <span class="keywordflow">break</span>;
-00426             <span class="keywordflow">default</span>:
-00427                 DBGWRT_ERR((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"*** %s(WDOG_OUT_PIN): illegal pattern 0x%x\n"</span>,
-00428                     func, value));
-00429                 <span class="keywordflow">return</span> ERR_LL_ILL_PARAM;
-00430             }
-00431             <span class="keywordflow">break</span>;
-00432 
-00433         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a13">WDOG_OUT_REASON</a>:
-00434             MCLRMASK_D32(ma, Z47_STAT, Z47_STAT_REASON_TOUT_MASK);
-00435             <span class="keywordflow">break</span>;
-00436 
-00437         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a14">WDOG_IRQ_PIN</a>:
-00438             <span class="keywordflow">switch</span> (value) {
-00439             <span class="keywordflow">case</span> 0:
-00440                 MCLRMASK_D32(ma, Z47_STAT, Z47_STAT_SET_WDOG_IRQ);
-00441                 <span class="keywordflow">break</span>;
-00442             <span class="keywordflow">case</span> 1:
-00443                 MSETMASK_D32(ma, Z47_STAT, Z47_STAT_SET_WDOG_IRQ);
-00444                 <span class="keywordflow">break</span>;
-00445             <span class="keywordflow">default</span>:
-00446                 DBGWRT_ERR((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"*** %s(WDOG_IRQ_PIN): illegal pattern 0x%x\n"</span>,
-00447                     func, value));
-00448                 <span class="keywordflow">return</span> ERR_LL_ILL_PARAM;
-00449             }
-00450             <span class="keywordflow">break</span>;
-00451 
-00452         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a15">WDOG_IRQ_SIGSET</a>:
-00453             <span class="comment">/* signal already installed ? */</span>
-00454             <span class="keywordflow">if</span> (llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a>) {
-00455                 error = ERR_OSS_SIG_SET;
-00456                 <span class="keywordflow">break</span>;
-00457             }
-00458             error = OSS_SigCreate(<a class="code" href="z47__drv_8c.html#a7">OSH</a>, value, &amp;llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a>);
-00459             <span class="keywordflow">break</span>;
-00460 
-00461         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a16">WDOG_IRQ_SIGCLR</a>:
-00462             <span class="comment">/* signal not installed ? */</span>
-00463             <span class="keywordflow">if</span> (llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a> == NULL) {
-00464                 error = ERR_OSS_SIG_CLR;
-00465                 <span class="keywordflow">break</span>;
-00466             }
-00467             error = OSS_SigRemove(<a class="code" href="z47__drv_8c.html#a7">OSH</a>, &amp;llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a>);
-00468             <span class="keywordflow">break</span>;
-00469 
-00470         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a17">WDOG_IRQ_REASON</a>:
-00471             MCLRMASK_D32(ma, Z47_STAT, Z47_STAT_REASON_IRQ_MASK);
-00472             <span class="keywordflow">break</span>;
-00473 
-00474         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a18">WDOG_ERR_PIN</a>:
-00475             <span class="keywordflow">switch</span> (value) {
-00476             <span class="keywordflow">case</span> 0:
-00477                 MCLRMASK_D32(ma, Z47_STAT, Z47_STAT_SW_ERR);
-00478                 <span class="keywordflow">break</span>;
-00479             <span class="keywordflow">case</span> 1:
-00480                 MSETMASK_D32(ma, Z47_STAT, Z47_STAT_SW_ERR);
-00481                 <span class="keywordflow">break</span>;
-00482             <span class="keywordflow">default</span>:
-00483                 DBGWRT_ERR((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"*** %s(WDOG_ERR_PIN): illegal pattern 0x%x\n"</span>,
-00484                     func, value));
-00485                 <span class="keywordflow">return</span> ERR_LL_ILL_PARAM;
-00486             }
-00487             <span class="keywordflow">break</span>;
-00488                     
-00489         <span class="comment">/*--------------------------+</span>
-00490 <span class="comment">        |  (unknown)                |</span>
-00491 <span class="comment">        +--------------------------*/</span>
-00492         <span class="keywordflow">default</span>:
-00493             error = ERR_LL_UNK_CODE;
-00494     }
-00495 
-00496     <span class="keywordflow">return</span> (error);
-00497 }
-00498 
-00499 <span class="comment">/****************************** Z47_GetStat *********************************/</span>
-<a name="l00515"></a><a class="code" href="z47__drv_8c.html#a13">00515</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a13">Z47_GetStat</a>(
-00516     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a>   *llHdl,
-00517     int32       code,
-00518     int32       ch,
-00519     INT32_OR_64 *value32_or_64P
-00520 )
-00521 {
-00522     int32 *valueP = (int32*)value32_or_64P;     <span class="comment">/* pointer to 32bit value */</span>
-00523     INT32_OR_64 *value64P = value32_or_64P;     <span class="comment">/* stores 32/64bit pointer */</span>
-00524     MACCESS ma = llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>;
-00525     int32 error = ERR_SUCCESS;
-00526     int32 read;
+00252     <span class="comment">/*------------------------------+</span>
+00253 <span class="comment">    |  de-init hardware             |</span>
+00254 <span class="comment">    +------------------------------*/</span>
+00255     <span class="comment">/* disable interrupt */</span>
+00256     MWRITE_D32(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>, Z47_IRQT, 0);
+00257 
+00258     <span class="comment">/*------------------------------+</span>
+00259 <span class="comment">    |  clean up memory              |</span>
+00260 <span class="comment">    +------------------------------*/</span>
+00261     *llHdlP = NULL;     <span class="comment">/* set low-level driver handle to NULL */</span>
+00262     error = <a class="code" href="z47__drv_8c.html#a19">Cleanup</a>(llHdl, error);
+00263 
+00264     <span class="keywordflow">return</span> (error);
+00265 }
+00266 
+00267 <span class="comment">/****************************** Z47_Read ************************************/</span>
+<a name="l00278"></a><a class="code" href="z47__drv_8c.html#a10">00278</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a10">Z47_Read</a>(
+00279     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a>  *llHdl,
+00280     int32      ch,
+00281     int32      *valueP
+00282 )
+00283 {
+00284     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_Read: ch=%d\n"</span>, ch));
+00285 
+00286     <span class="keywordflow">return</span>(ERR_LL_ILL_FUNC);
+00287 }
+00288 
+00289 <span class="comment">/****************************** Z47_Write ***********************************/</span>
+<a name="l00300"></a><a class="code" href="z47__drv_8c.html#a11">00300</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a11">Z47_Write</a>(
+00301     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a>  *llHdl,
+00302     int32      ch,
+00303     int32      value
+00304 )
+00305 {
+00306     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_Write: ch=%d  val=0x%x\n"</span>, ch, value));
+00307 
+00308     <span class="keywordflow">return</span>(ERR_LL_ILL_FUNC);
+00309 }
+00310 
+00311 <span class="comment">/****************************** Z47_SetStat *********************************/</span>
+<a name="l00324"></a><a class="code" href="z47__drv_8c.html#a12">00324</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a12">Z47_SetStat</a>(
+00325     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a>   *llHdl,
+00326     int32       code,
+00327     int32       ch,
+00328     INT32_OR_64 value32_or_64
+00329 )
+00330 {
+00331     <span class="keywordtype">char</span> *func = <span class="stringliteral">"LL - Z47_SetStat"</span>;
+00332     int32 value = (int32)value32_or_64;     <span class="comment">/* 32bit value */</span>
+00333     MACCESS ma = llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>;
+00334     int32 error = ERR_SUCCESS;
+00335 
+00336     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"%s: ch=%d code=0x%04x value=0x%x\n"</span>,
+00337                 func, ch, code, value));
+00338 
+00339     <span class="keywordflow">switch</span> (code) {
+00340         <span class="comment">/*--------------------------+</span>
+00341 <span class="comment">        |  debug level              |</span>
+00342 <span class="comment">        +--------------------------*/</span>
+00343         <span class="keywordflow">case</span> M_LL_DEBUG_LEVEL:
+00344             llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o6">dbgLevel</a> = value;
+00345             <span class="keywordflow">break</span>;
+00346         <span class="comment">/*--------------------------+</span>
+00347 <span class="comment">        |  enable interrupts        |</span>
+00348 <span class="comment">        +--------------------------*/</span>
+00349         <span class="keywordflow">case</span> M_MK_IRQ_ENABLE:
+00350             <span class="keywordflow">break</span>;
+00351         <span class="comment">/*--------------------------+</span>
+00352 <span class="comment">        |  set irq counter          |</span>
+00353 <span class="comment">        +--------------------------*/</span>
+00354         <span class="keywordflow">case</span> M_LL_IRQ_COUNT:
+00355             llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o9">irqCount</a> = value;
+00356             <span class="keywordflow">break</span>;
+00357         <span class="comment">/*--------------------------+</span>
+00358 <span class="comment">        |  channel direction        |</span>
+00359 <span class="comment">        +--------------------------*/</span>
+00360         <span class="keywordflow">case</span> M_LL_CH_DIR:
+00361             <span class="keywordflow">if</span> (value != M_CH_INOUT) {
+00362                 error = ERR_LL_ILL_DIR;
+00363             }
+00364             <span class="keywordflow">break</span>;
+00365         <span class="comment">/*--------------------------+</span>
+00366 <span class="comment">        |  old WDOG codes           |</span>
+00367 <span class="comment">        +--------------------------*/</span>
+00368         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a1">WDOG_START</a>:
+00369             MSETMASK_D32(ma, Z47_CFG, Z47_CFG_WDOG_EN);
+00370             llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o10">wdStart</a> = 1;
+00371             <span class="keywordflow">break</span>;
+00372 
+00373         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a3">WDOG_STOP</a>:
+00374             MCLRMASK_D32(ma, Z47_CFG, Z47_CFG_WDOG_EN);
+00375             llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o10">wdStart</a> = 0;
+00376             <span class="keywordflow">break</span>;
+00377 
+00378         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a2">WDOG_TRIG</a>:
+00379             error = <a class="code" href="z47__drv_8c.html#a20">WdogTrig</a>(llHdl, 0);
+00380             <span class="keywordflow">break</span>;
+00381 
+00382         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a4">WDOG_TIME</a>:
+00383             <span class="comment">/* given time [ms], IP core time [us] */</span>
+00384             MWRITE_D32(ma, Z47_MAXT, value * 1000);
+00385             <span class="keywordflow">break</span>;
+00386 
+00387         <span class="comment">/*--------------------------+</span>
+00388 <span class="comment">        |  new WDOG codes           |</span>
+00389 <span class="comment">        +--------------------------*/</span>
+00390         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a7">WDOG_RESET_CTRL</a>:
+00391             MSETMASK_D32(ma, Z47_CFG, Z47_CFG_WDOG_RESTART);
+00392             <span class="keywordflow">break</span>;
+00393 
+00394         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a8">WDOG_TRIG_PAT</a>:
+00395             error = <a class="code" href="z47__drv_8c.html#a20">WdogTrig</a>(llHdl, value);
+00396             <span class="keywordflow">break</span>;
+00397 
+00398         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a9">WDOG_TIME_MIN</a>:
+00399             <span class="comment">/* given time [us], IP core time [us] */</span>
+00400             MWRITE_D32(ma, Z47_MINT, value);
+00401             <span class="keywordflow">break</span>;
+00402 
+00403         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a10">WDOG_TIME_MAX</a>:
+00404             <span class="comment">/* given time [us], IP core time [us] */</span>
+00405             MWRITE_D32(ma, Z47_MAXT, value);
+00406             <span class="keywordflow">break</span>;
+00407 
+00408         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a11">WDOG_TIME_IRQ</a>:
+00409             <span class="comment">/*</span>
+00410 <span class="comment">             * given time [us], IP core time [us]</span>
+00411 <span class="comment">             * Note: Value&gt;0 enables the interrupt!</span>
+00412 <span class="comment">             */</span>
+00413             MWRITE_D32(ma, Z47_IRQT, value);
+00414             <span class="keywordflow">break</span>;
+00415 
+00416         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a12">WDOG_OUT_PIN</a>:
+00417             <span class="keywordflow">switch</span> (value){
+00418             <span class="keywordflow">case</span> 0:
+00419                 MCLRMASK_D32(ma, Z47_CTRL, Z47_CTRL_SET_WDOG_TOUT);
+00420             <span class="keywordflow">break</span>;
+00421             <span class="keywordflow">case</span> 1:
+00422                 MSETMASK_D32(ma, Z47_CTRL, Z47_CTRL_SET_WDOG_TOUT);
+00423                 <span class="keywordflow">break</span>;
+00424             <span class="keywordflow">default</span>:
+00425                 DBGWRT_ERR((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"*** %s(WDOG_OUT_PIN): illegal pattern 0x%x\n"</span>,
+00426                     func, value));
+00427                 <span class="keywordflow">return</span> ERR_LL_ILL_PARAM;
+00428             }
+00429             <span class="keywordflow">break</span>;
+00430 
+00431         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a13">WDOG_OUT_REASON</a>:
+00432             MCLRMASK_D32(ma, Z47_STAT, Z47_STAT_REASON_TOUT_MASK);
+00433             <span class="keywordflow">break</span>;
+00434 
+00435         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a14">WDOG_IRQ_PIN</a>:
+00436             <span class="keywordflow">switch</span> (value) {
+00437             <span class="keywordflow">case</span> 0:
+00438                 MCLRMASK_D32(ma, Z47_CTRL, Z47_CTRL_SET_WDOG_IRQ);
+00439                 <span class="keywordflow">break</span>;
+00440             <span class="keywordflow">case</span> 1:
+00441                 MSETMASK_D32(ma, Z47_CTRL, Z47_CTRL_SET_WDOG_IRQ);
+00442                 <span class="keywordflow">break</span>;
+00443             <span class="keywordflow">default</span>:
+00444                 DBGWRT_ERR((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"*** %s(WDOG_IRQ_PIN): illegal pattern 0x%x\n"</span>,
+00445                     func, value));
+00446                 <span class="keywordflow">return</span> ERR_LL_ILL_PARAM;
+00447             }
+00448             <span class="keywordflow">break</span>;
+00449 
+00450         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a15">WDOG_IRQ_SIGSET</a>:
+00451             <span class="comment">/* signal already installed ? */</span>
+00452             <span class="keywordflow">if</span> (llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a>) {
+00453                 error = ERR_OSS_SIG_SET;
+00454                 <span class="keywordflow">break</span>;
+00455             }
+00456             error = OSS_SigCreate(<a class="code" href="z47__drv_8c.html#a7">OSH</a>, value, &amp;llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a>);
+00457             <span class="keywordflow">break</span>;
+00458 
+00459         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a16">WDOG_IRQ_SIGCLR</a>:
+00460             <span class="comment">/* signal not installed ? */</span>
+00461             <span class="keywordflow">if</span> (llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a> == NULL) {
+00462                 error = ERR_OSS_SIG_CLR;
+00463                 <span class="keywordflow">break</span>;
+00464             }
+00465             error = OSS_SigRemove(<a class="code" href="z47__drv_8c.html#a7">OSH</a>, &amp;llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a>);
+00466             <span class="keywordflow">break</span>;
+00467 
+00468         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a17">WDOG_IRQ_REASON</a>:
+00469             MCLRMASK_D32(ma, Z47_STAT, Z47_STAT_REASON_IRQ_MASK);
+00470             <span class="keywordflow">break</span>;
+00471 
+00472         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a18">WDOG_ERR_PIN</a>:
+00473             <span class="keywordflow">switch</span> (value) {
+00474             <span class="keywordflow">case</span> 0:
+00475                 MCLRMASK_D32(ma, Z47_CTRL, Z47_CTRL_SW_ERR);
+00476                 <span class="keywordflow">break</span>;
+00477             <span class="keywordflow">case</span> 1:
+00478                 MSETMASK_D32(ma, Z47_CTRL, Z47_CTRL_SW_ERR);
+00479                 <span class="keywordflow">break</span>;
+00480             <span class="keywordflow">default</span>:
+00481                 DBGWRT_ERR((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"*** %s(WDOG_ERR_PIN): illegal pattern 0x%x\n"</span>,
+00482                     func, value));
+00483                 <span class="keywordflow">return</span> ERR_LL_ILL_PARAM;
+00484             }
+00485             <span class="keywordflow">break</span>;
+00486                     
+00487         <span class="comment">/*--------------------------+</span>
+00488 <span class="comment">        |  (unknown)                |</span>
+00489 <span class="comment">        +--------------------------*/</span>
+00490         <span class="keywordflow">default</span>:
+00491             error = ERR_LL_UNK_CODE;
+00492     }
+00493 
+00494     <span class="keywordflow">return</span> (error);
+00495 }
+00496 
+00497 <span class="comment">/****************************** Z47_GetStat *********************************/</span>
+<a name="l00513"></a><a class="code" href="z47__drv_8c.html#a13">00513</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a13">Z47_GetStat</a>(
+00514     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a>   *llHdl,
+00515     int32       code,
+00516     int32       ch,
+00517     INT32_OR_64 *value32_or_64P
+00518 )
+00519 {
+00520     int32 *valueP = (int32*)value32_or_64P;     <span class="comment">/* pointer to 32bit value */</span>
+00521     INT32_OR_64 *value64P = value32_or_64P;     <span class="comment">/* stores 32/64bit pointer */</span>
+00522     MACCESS ma = llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>;
+00523     int32 error = ERR_SUCCESS;
+00524     int32 read;
+00525 
+00526     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_GetStat: ch=%d code=0x%04x\n"</span>, ch, code));
 00527 
-00528     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_GetStat: ch=%d code=0x%04x\n"</span>, ch, code));
-00529 
-00530     <span class="keywordflow">switch</span> (code) {
-00531         <span class="comment">/*--------------------------+</span>
-00532 <span class="comment">        |  debug level              |</span>
-00533 <span class="comment">        +--------------------------*/</span>
-00534         <span class="keywordflow">case</span> M_LL_DEBUG_LEVEL:
-00535             *valueP = llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o6">dbgLevel</a>;
-00536             <span class="keywordflow">break</span>;
-00537         <span class="comment">/*--------------------------+</span>
-00538 <span class="comment">        |  number of channels       |</span>
-00539 <span class="comment">        +--------------------------*/</span>
-00540         <span class="keywordflow">case</span> M_LL_CH_NUMBER:
-00541             *valueP = <a class="code" href="z47__drv_8c.html#a1">CH_NUMBER</a>;
-00542             <span class="keywordflow">break</span>;
-00543         <span class="comment">/*--------------------------+</span>
-00544 <span class="comment">        |  channel direction        |</span>
-00545 <span class="comment">        +--------------------------*/</span>
-00546         <span class="keywordflow">case</span> M_LL_CH_DIR:
-00547             *valueP = M_CH_INOUT;
-00548             <span class="keywordflow">break</span>;
-00549         <span class="comment">/*--------------------------+</span>
-00550 <span class="comment">        |  channel length [bits]    |</span>
-00551 <span class="comment">        +--------------------------*/</span>
-00552         <span class="keywordflow">case</span> M_LL_CH_LEN:
-00553             *valueP = 1;
-00554             <span class="keywordflow">break</span>;
-00555         <span class="comment">/*--------------------------+</span>
-00556 <span class="comment">        |  channel type info        |</span>
-00557 <span class="comment">        +--------------------------*/</span>
-00558         <span class="keywordflow">case</span> M_LL_CH_TYP:
-00559             *valueP = M_CH_BINARY;
-00560             <span class="keywordflow">break</span>;
-00561         <span class="comment">/*--------------------------+</span>
-00562 <span class="comment">        |  irq counter              |</span>
-00563 <span class="comment">        +--------------------------*/</span>
-00564         <span class="keywordflow">case</span> M_LL_IRQ_COUNT:
-00565             *valueP = llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o9">irqCount</a>;
-00566             <span class="keywordflow">break</span>;
-00567         <span class="comment">/*--------------------------+</span>
-00568 <span class="comment">        |  ID PROM check enabled    |</span>
-00569 <span class="comment">        +--------------------------*/</span>
-00570         <span class="keywordflow">case</span> M_LL_ID_CHECK:
-00571             *valueP = 0;
-00572             <span class="keywordflow">break</span>;
-00573         <span class="comment">/*--------------------------+</span>
-00574 <span class="comment">        |  ident table pointer      |</span>
-00575 <span class="comment">        |  (treat as non-block!)    |</span>
-00576 <span class="comment">        +--------------------------*/</span>
-00577         <span class="keywordflow">case</span> M_MK_BLK_REV_ID:
-00578             *value64P = (INT32_OR_64)&amp;llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o5">idFuncTbl</a>;
-00579             <span class="keywordflow">break</span>;
-00580 
-00581         <span class="comment">/*--------------------------+</span>
-00582 <span class="comment">        |  old WDOG codes           |</span>
-00583 <span class="comment">        +--------------------------*/</span>
-00584         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a4">WDOG_TIME</a>:
-00585             <span class="comment">/* IP core time [us], requested time [ms] */</span>
-00586             *value64P = (MREAD_D32(ma, Z47_MAXT)) / 1000;
-00587             <span class="keywordflow">break</span>;
-00588 
-00589         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a5">WDOG_STATUS</a>:
-00590             read = MREAD_D32(ma, Z47_STAT);
-00591             *value64P = (read &amp; Z47_STAT_WDOG_CNT_STATUS) ? 1 : 0;
-00592             <span class="keywordflow">break</span>;
-00593 
-00594         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a6">WDOG_SHOT</a>:
-00595             read = MREAD_D32(ma, Z47_STAT);
-00596             read = (read &amp; Z47_STAT_REASON_TOUT_MASK) &gt;&gt; Z47_STAT_REASON_TOUT_SHIFT;
-00597             *value64P = ((read == Z47_REASON_MIN_TOUT) ||
-00598                          (read == Z47_REASON_MAX_TOUT) ) ? 1 : 0;
-00599             <span class="keywordflow">break</span>;
-00600 
-00601         <span class="comment">/*--------------------------+</span>
-00602 <span class="comment">        |  new WDOG codes           |</span>
-00603 <span class="comment">        +--------------------------*/</span>
-00604         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a9">WDOG_TIME_MIN</a>:
-00605             <span class="comment">/* IP core time [us], requested time [us] */</span>
-00606             *value64P = MREAD_D32(ma, Z47_MINT);
-00607             <span class="keywordflow">break</span>;
-00608 
-00609         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a10">WDOG_TIME_MAX</a>:
-00610             <span class="comment">/* IP core time [us], requested time [us] */</span>
-00611             *value64P = MREAD_D32(ma, Z47_MAXT);
-00612             <span class="keywordflow">break</span>;
-00613 
-00614         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a11">WDOG_TIME_IRQ</a>:
-00615             <span class="comment">/* IP core time [us], requested time [us] */</span>
-00616             *value64P = MREAD_D32(ma, Z47_IRQT);
-00617             <span class="keywordflow">break</span>;
-00618 
-00619         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a12">WDOG_OUT_PIN</a>:
-00620             read = MREAD_D32(ma, Z47_STAT);
-00621             *value64P = (read &amp; Z47_STAT_SET_WDOG_TOUT) ? 1 : 0;
-00622             <span class="keywordflow">break</span>;
-00623 
-00624         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a13">WDOG_OUT_REASON</a>:
-00625             read = MREAD_D32(ma, Z47_STAT);
-00626             *value64P = (read &amp; Z47_STAT_REASON_TOUT_MASK) &gt;&gt; Z47_STAT_REASON_TOUT_SHIFT;
-00627             <span class="keywordflow">break</span>;
-00628 
-00629         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a14">WDOG_IRQ_PIN</a>:
-00630             read = MREAD_D32(ma, Z47_STAT);
-00631             *value64P = (read &amp; Z47_STAT_SET_WDOG_IRQ) ? 1 : 0;
-00632             <span class="keywordflow">break</span>;
-00633 
-00634         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a17">WDOG_IRQ_REASON</a>:
-00635             read = MREAD_D32(ma, Z47_STAT);
-00636             *value64P = (read &amp; Z47_STAT_REASON_IRQ_MASK) &gt;&gt; Z47_STAT_REASON_IRQ_SHIFT;
-00637             <span class="keywordflow">break</span>;
-00638 
-00639         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a18">WDOG_ERR_PIN</a>:
-00640             read = MREAD_D32(ma, Z47_STAT);
-00641             *value64P = (read &amp; Z47_STAT_SW_ERR) ? 1 : 0;
-00642             <span class="keywordflow">break</span>;
-00643             
-00644         <span class="comment">/*--------------------------+</span>
-00645 <span class="comment">        |  (unknown)                |</span>
-00646 <span class="comment">        +--------------------------*/</span>
-00647         <span class="keywordflow">default</span>:
-00648             error = ERR_LL_UNK_CODE;
-00649     }
-00650 
-00651     <span class="keywordflow">return</span> (error);
-00652 }
-00653 
-00654 <span class="comment">/******************************* Z47_BlockRead ******************************/</span>
-<a name="l00667"></a><a class="code" href="z47__drv_8c.html#a14">00667</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a14">Z47_BlockRead</a>(
-00668     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl,
-00669     int32     ch,
-00670     <span class="keywordtype">void</span>      *buf,
-00671     int32     size,
-00672     int32     *nbrRdBytesP
-00673 )
-00674 {
-00675     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_BlockRead: ch=%d, size=%d\n"</span>, ch, size));
-00676 
-00677     <span class="comment">/* return number of read bytes */</span>
-00678     *nbrRdBytesP = 0;
-00679 
-00680     <span class="keywordflow">return</span> (ERR_LL_ILL_FUNC);
-00681 }
-00682 
-00683 <span class="comment">/****************************** Z47_BlockWrite *****************************/</span>
-<a name="l00696"></a><a class="code" href="z47__drv_8c.html#a15">00696</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a15">Z47_BlockWrite</a>(
-00697     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl,
-00698     int32     ch,
-00699     <span class="keywordtype">void</span>      *buf,
-00700     int32     size,
-00701     int32     *nbrWrBytesP
-00702 )
-00703 {
-00704     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_BlockWrite: ch=%d, size=%d\n"</span>, ch, size));
-00705 
-00706     <span class="comment">/* return number of written bytes */</span>
-00707     *nbrWrBytesP = 0;
-00708 
-00709     <span class="keywordflow">return</span> (ERR_LL_ILL_FUNC);
-00710 }
-00711 
-00712 <span class="comment">/****************************** Z47_Irq ************************************/</span>
-<a name="l00730"></a><a class="code" href="z47__drv_8c.html#a16">00730</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a16">Z47_Irq</a>(
-00731     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl
-00732 )
-00733 {
-00734     <span class="keywordflow">if</span> (MREAD_D32(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>, Z47_STAT) &amp; Z47_STAT_WDOG_IRQ_STATUS){
-00735 
-00736         IDBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"&gt;&gt;&gt; LL - Z47_Irq\n"</span>));
+00528     <span class="keywordflow">switch</span> (code) {
+00529         <span class="comment">/*--------------------------+</span>
+00530 <span class="comment">        |  debug level              |</span>
+00531 <span class="comment">        +--------------------------*/</span>
+00532         <span class="keywordflow">case</span> M_LL_DEBUG_LEVEL:
+00533             *valueP = llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o6">dbgLevel</a>;
+00534             <span class="keywordflow">break</span>;
+00535         <span class="comment">/*--------------------------+</span>
+00536 <span class="comment">        |  number of channels       |</span>
+00537 <span class="comment">        +--------------------------*/</span>
+00538         <span class="keywordflow">case</span> M_LL_CH_NUMBER:
+00539             *valueP = <a class="code" href="z47__drv_8c.html#a1">CH_NUMBER</a>;
+00540             <span class="keywordflow">break</span>;
+00541         <span class="comment">/*--------------------------+</span>
+00542 <span class="comment">        |  channel direction        |</span>
+00543 <span class="comment">        +--------------------------*/</span>
+00544         <span class="keywordflow">case</span> M_LL_CH_DIR:
+00545             *valueP = M_CH_INOUT;
+00546             <span class="keywordflow">break</span>;
+00547         <span class="comment">/*--------------------------+</span>
+00548 <span class="comment">        |  channel length [bits]    |</span>
+00549 <span class="comment">        +--------------------------*/</span>
+00550         <span class="keywordflow">case</span> M_LL_CH_LEN:
+00551             *valueP = 1;
+00552             <span class="keywordflow">break</span>;
+00553         <span class="comment">/*--------------------------+</span>
+00554 <span class="comment">        |  channel type info        |</span>
+00555 <span class="comment">        +--------------------------*/</span>
+00556         <span class="keywordflow">case</span> M_LL_CH_TYP:
+00557             *valueP = M_CH_BINARY;
+00558             <span class="keywordflow">break</span>;
+00559         <span class="comment">/*--------------------------+</span>
+00560 <span class="comment">        |  irq counter              |</span>
+00561 <span class="comment">        +--------------------------*/</span>
+00562         <span class="keywordflow">case</span> M_LL_IRQ_COUNT:
+00563             *valueP = llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o9">irqCount</a>;
+00564             <span class="keywordflow">break</span>;
+00565         <span class="comment">/*--------------------------+</span>
+00566 <span class="comment">        |  ID PROM check enabled    |</span>
+00567 <span class="comment">        +--------------------------*/</span>
+00568         <span class="keywordflow">case</span> M_LL_ID_CHECK:
+00569             *valueP = 0;
+00570             <span class="keywordflow">break</span>;
+00571         <span class="comment">/*--------------------------+</span>
+00572 <span class="comment">        |  ident table pointer      |</span>
+00573 <span class="comment">        |  (treat as non-block!)    |</span>
+00574 <span class="comment">        +--------------------------*/</span>
+00575         <span class="keywordflow">case</span> M_MK_BLK_REV_ID:
+00576             *value64P = (INT32_OR_64)&amp;llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o5">idFuncTbl</a>;
+00577             <span class="keywordflow">break</span>;
+00578 
+00579         <span class="comment">/*--------------------------+</span>
+00580 <span class="comment">        |  old WDOG codes           |</span>
+00581 <span class="comment">        +--------------------------*/</span>
+00582         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a4">WDOG_TIME</a>:
+00583             <span class="comment">/* IP core time [us], requested time [ms] */</span>
+00584             *valueP = (MREAD_D32(ma, Z47_MAXT)) / 1000;
+00585             <span class="keywordflow">break</span>;
+00586 
+00587         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a5">WDOG_STATUS</a>:
+00588             read = MREAD_D32(ma, Z47_STAT);
+00589             *valueP = (read &amp; Z47_STAT_WDOG_CNT_STATUS) ? 1 : 0;
+00590             <span class="keywordflow">break</span>;
+00591 
+00592         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a6">WDOG_SHOT</a>:
+00593             read = MREAD_D32(ma, Z47_STAT);
+00594             read = (read &amp; Z47_STAT_REASON_TOUT_MASK) &gt;&gt; Z47_STAT_REASON_TOUT_SHIFT;
+00595             *valueP = ((read == Z47_REASON_MIN_TOUT) ||
+00596                        (read == Z47_REASON_MAX_TOUT) ) ? 1 : 0;
+00597             <span class="keywordflow">break</span>;
+00598 
+00599         <span class="comment">/*--------------------------+</span>
+00600 <span class="comment">        |  new WDOG codes           |</span>
+00601 <span class="comment">        +--------------------------*/</span>
+00602         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a8">WDOG_TRIG_PAT</a>:
+00603             *valueP = MREAD_D32(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>, Z47_CLR);
+00604             <span class="keywordflow">break</span>;
+00605 
+00606         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a9">WDOG_TIME_MIN</a>:
+00607             <span class="comment">/* IP core time [us], requested time [us] */</span>
+00608             *valueP = MREAD_D32(ma, Z47_MINT);
+00609             <span class="keywordflow">break</span>;
+00610 
+00611         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a10">WDOG_TIME_MAX</a>:
+00612             <span class="comment">/* IP core time [us], requested time [us] */</span>
+00613             *valueP = MREAD_D32(ma, Z47_MAXT);
+00614             <span class="keywordflow">break</span>;
+00615 
+00616         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a11">WDOG_TIME_IRQ</a>:
+00617             <span class="comment">/* IP core time [us], requested time [us] */</span>
+00618             *valueP = MREAD_D32(ma, Z47_IRQT);
+00619             <span class="keywordflow">break</span>;
+00620 
+00621         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a12">WDOG_OUT_PIN</a>:
+00622             read = MREAD_D32(ma, Z47_CTRL);
+00623             *valueP = (read &amp; Z47_CTRL_SET_WDOG_TOUT) ? 1 : 0;
+00624             <span class="keywordflow">break</span>;
+00625 
+00626         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a13">WDOG_OUT_REASON</a>:
+00627             read = MREAD_D32(ma, Z47_STAT);
+00628             *valueP = (read &amp; Z47_STAT_REASON_TOUT_MASK) &gt;&gt; Z47_STAT_REASON_TOUT_SHIFT;
+00629             <span class="keywordflow">break</span>;
+00630 
+00631         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a14">WDOG_IRQ_PIN</a>:
+00632             read = MREAD_D32(ma, Z47_CTRL);
+00633             *valueP = (read &amp; Z47_CTRL_SET_WDOG_IRQ) ? 1 : 0;
+00634             <span class="keywordflow">break</span>;
+00635 
+00636         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a17">WDOG_IRQ_REASON</a>:
+00637             read = MREAD_D32(ma, Z47_STAT);
+00638             *valueP = (read &amp; Z47_STAT_REASON_IRQ_MASK) &gt;&gt; Z47_STAT_REASON_IRQ_SHIFT;
+00639             <span class="keywordflow">break</span>;
+00640 
+00641         <span class="keywordflow">case</span> <a class="code" href="wdog_8h.html#a18">WDOG_ERR_PIN</a>:
+00642             read = MREAD_D32(ma, Z47_CTRL);
+00643             *valueP = (read &amp; Z47_CTRL_SW_ERR) ? 1 : 0;
+00644             <span class="keywordflow">break</span>;
+00645             
+00646         <span class="comment">/*--------------------------+</span>
+00647 <span class="comment">        |  (unknown)                |</span>
+00648 <span class="comment">        +--------------------------*/</span>
+00649         <span class="keywordflow">default</span>:
+00650             error = ERR_LL_UNK_CODE;
+00651     }
+00652 
+00653     <span class="keywordflow">return</span> (error);
+00654 }
+00655 
+00656 <span class="comment">/******************************* Z47_BlockRead ******************************/</span>
+<a name="l00669"></a><a class="code" href="z47__drv_8c.html#a14">00669</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a14">Z47_BlockRead</a>(
+00670     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl,
+00671     int32     ch,
+00672     <span class="keywordtype">void</span>      *buf,
+00673     int32     size,
+00674     int32     *nbrRdBytesP
+00675 )
+00676 {
+00677     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_BlockRead: ch=%d, size=%d\n"</span>, ch, size));
+00678 
+00679     <span class="comment">/* return number of read bytes */</span>
+00680     *nbrRdBytesP = 0;
+00681 
+00682     <span class="keywordflow">return</span> (ERR_LL_ILL_FUNC);
+00683 }
+00684 
+00685 <span class="comment">/****************************** Z47_BlockWrite *****************************/</span>
+<a name="l00698"></a><a class="code" href="z47__drv_8c.html#a15">00698</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a15">Z47_BlockWrite</a>(
+00699     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl,
+00700     int32     ch,
+00701     <span class="keywordtype">void</span>      *buf,
+00702     int32     size,
+00703     int32     *nbrWrBytesP
+00704 )
+00705 {
+00706     DBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"LL - Z47_BlockWrite: ch=%d, size=%d\n"</span>, ch, size));
+00707 
+00708     <span class="comment">/* return number of written bytes */</span>
+00709     *nbrWrBytesP = 0;
+00710 
+00711     <span class="keywordflow">return</span> (ERR_LL_ILL_FUNC);
+00712 }
+00713 
+00714 <span class="comment">/****************************** Z47_Irq ************************************/</span>
+<a name="l00732"></a><a class="code" href="z47__drv_8c.html#a16">00732</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a16">Z47_Irq</a>(
+00733     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl
+00734 )
+00735 {
+00736     <span class="keywordflow">if</span> (MREAD_D32(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>, Z47_STAT) &amp; Z47_STAT_WDOG_IRQ_STATUS){
 00737 
-00738         <span class="comment">/* clear interrupt */</span>
-00739         MSETMASK_D32(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>, Z47_STAT, Z47_STAT_WDOG_IRQ_STATUS);
-00740         
-00741         <span class="comment">/* if requested send signal to application */</span>
-00742         <span class="keywordflow">if</span> (llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a>)
-00743             OSS_SigSend(<a class="code" href="z47__drv_8c.html#a7">OSH</a>, llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a>);
-00744         
-00745         llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o9">irqCount</a>++;
-00746 
-00747         <span class="keywordflow">return</span> (LL_IRQ_DEVICE);
-00748     }
-00749 
-00750     <span class="keywordflow">return</span> (LL_IRQ_DEV_NOT);
-00751 }
-00752 
-00753 <span class="comment">/****************************** Z47_Info ***********************************/</span>
-<a name="l00791"></a><a class="code" href="z47__drv_8c.html#a17">00791</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a17">Z47_Info</a>(
-00792     int32 infoType,
-00793     ...
-00794 )
-00795 {
-00796     int32   error = ERR_SUCCESS;
-00797     va_list argptr;
-00798 
-00799     va_start(argptr, infoType);
+00738         IDBGWRT_1((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"&gt;&gt;&gt; LL - Z47_Irq\n"</span>));
+00739 
+00740         <span class="comment">/* clear interrupt */</span>
+00741         MSETMASK_D32(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>, Z47_STAT, Z47_STAT_WDOG_IRQ_STATUS);
+00742         
+00743         <span class="comment">/* if requested send signal to application */</span>
+00744         <span class="keywordflow">if</span> (llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a>)
+00745             OSS_SigSend(<a class="code" href="z47__drv_8c.html#a7">OSH</a>, llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o8">sigHdl</a>);
+00746         
+00747         llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o9">irqCount</a>++;
+00748 
+00749         <span class="keywordflow">return</span> (LL_IRQ_DEVICE);
+00750     }
+00751 
+00752     <span class="keywordflow">return</span> (LL_IRQ_DEV_NOT);
+00753 }
+00754 
+00755 <span class="comment">/****************************** Z47_Info ***********************************/</span>
+<a name="l00793"></a><a class="code" href="z47__drv_8c.html#a17">00793</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a17">Z47_Info</a>(
+00794     int32 infoType,
+00795     ...
+00796 )
+00797 {
+00798     int32   error = ERR_SUCCESS;
+00799     va_list argptr;
 00800 
-00801     <span class="keywordflow">switch</span> (infoType) {
-00802         <span class="comment">/*-------------------------------+</span>
-00803 <span class="comment">        |  hardware characteristics      |</span>
-00804 <span class="comment">        |  (all addr/data modes ORed)    |</span>
-00805 <span class="comment">        +-------------------------------*/</span>
-00806         <span class="keywordflow">case</span> LL_INFO_HW_CHARACTER:
-00807         {
-00808             u_int32 *addrModeP = va_arg(argptr, u_int32*);
-00809             u_int32 *dataModeP = va_arg(argptr, u_int32*);
-00810         
-00811             *addrModeP = MDIS_MA08;
-00812             *dataModeP = MDIS_MD08 | MDIS_MD16;
-00813             <span class="keywordflow">break</span>;
-00814         }
-00815         <span class="comment">/*-------------------------------+</span>
-00816 <span class="comment">        |  nr of required address spaces |</span>
-00817 <span class="comment">        |  (total spaces used)           |</span>
-00818 <span class="comment">        +-------------------------------*/</span>
-00819         <span class="keywordflow">case</span> LL_INFO_ADDRSPACE_COUNT:
-00820         {
-00821             u_int32 *nbrOfAddrSpaceP = va_arg(argptr, u_int32*);
-00822         
-00823             *nbrOfAddrSpaceP = <a class="code" href="z47__drv_8c.html#a3">ADDRSPACE_COUNT</a>;
-00824             <span class="keywordflow">break</span>;
-00825         }
-00826         <span class="comment">/*-------------------------------+</span>
-00827 <span class="comment">        |  address space type            |</span>
-00828 <span class="comment">        |  (widest used data mode)       |</span>
-00829 <span class="comment">        +-------------------------------*/</span>
-00830         <span class="keywordflow">case</span> LL_INFO_ADDRSPACE:
-00831         {
-00832             u_int32 addrSpaceIndex = va_arg(argptr, u_int32);
-00833             u_int32 *addrModeP = va_arg(argptr, u_int32*);
-00834             u_int32 *dataModeP = va_arg(argptr, u_int32*);
-00835             u_int32 *addrSizeP = va_arg(argptr, u_int32*);
-00836         
-00837             <span class="keywordflow">if</span> (addrSpaceIndex &gt;= <a class="code" href="z47__drv_8c.html#a3">ADDRSPACE_COUNT</a>)
-00838                 error = ERR_LL_ILL_PARAM;
-00839             <span class="keywordflow">else</span> {
-00840                 *addrModeP = MDIS_MA08;
-00841                 *dataModeP = MDIS_MD16;
-00842                 *addrSizeP = <a class="code" href="z47__drv_8c.html#a4">ADDRSPACE_SIZE</a>;
-00843             }
-00844 
-00845             <span class="keywordflow">break</span>;
-00846         }
-00847         <span class="comment">/*-------------------------------+</span>
-00848 <span class="comment">        |  interrupt required            |</span>
-00849 <span class="comment">        +-------------------------------*/</span>
-00850         <span class="keywordflow">case</span> LL_INFO_IRQ:
-00851         {
-00852             u_int32 *useIrqP = va_arg(argptr, u_int32*);
-00853 
-00854             *useIrqP = <a class="code" href="z47__drv_8c.html#a2">USE_IRQ</a>;
-00855             <span class="keywordflow">break</span>;
-00856         }
-00857         <span class="comment">/*-------------------------------+</span>
-00858 <span class="comment">        |  process lock mode             |</span>
-00859 <span class="comment">        +-------------------------------*/</span>
-00860         <span class="keywordflow">case</span> LL_INFO_LOCKMODE:
-00861         {
-00862             u_int32 *lockModeP = va_arg(argptr, u_int32*);
-00863 
-00864             *lockModeP = LL_LOCK_CALL;
-00865             <span class="keywordflow">break</span>;
-00866         }
-00867         <span class="comment">/*-------------------------------+</span>
-00868 <span class="comment">        |  (unknown)                     |</span>
-00869 <span class="comment">        +-------------------------------*/</span>
-00870         <span class="keywordflow">default</span>:
-00871             error = ERR_LL_ILL_PARAM;
-00872     }
-00873 
-00874     va_end(argptr);
+00801     va_start(argptr, infoType);
+00802 
+00803     <span class="keywordflow">switch</span> (infoType) {
+00804         <span class="comment">/*-------------------------------+</span>
+00805 <span class="comment">        |  hardware characteristics      |</span>
+00806 <span class="comment">        |  (all addr/data modes ORed)    |</span>
+00807 <span class="comment">        +-------------------------------*/</span>
+00808         <span class="keywordflow">case</span> LL_INFO_HW_CHARACTER:
+00809         {
+00810             u_int32 *addrModeP = va_arg(argptr, u_int32*);
+00811             u_int32 *dataModeP = va_arg(argptr, u_int32*);
+00812         
+00813             *addrModeP = MDIS_MA08;
+00814             *dataModeP = MDIS_MD08 | MDIS_MD16;
+00815             <span class="keywordflow">break</span>;
+00816         }
+00817         <span class="comment">/*-------------------------------+</span>
+00818 <span class="comment">        |  nr of required address spaces |</span>
+00819 <span class="comment">        |  (total spaces used)           |</span>
+00820 <span class="comment">        +-------------------------------*/</span>
+00821         <span class="keywordflow">case</span> LL_INFO_ADDRSPACE_COUNT:
+00822         {
+00823             u_int32 *nbrOfAddrSpaceP = va_arg(argptr, u_int32*);
+00824         
+00825             *nbrOfAddrSpaceP = <a class="code" href="z47__drv_8c.html#a3">ADDRSPACE_COUNT</a>;
+00826             <span class="keywordflow">break</span>;
+00827         }
+00828         <span class="comment">/*-------------------------------+</span>
+00829 <span class="comment">        |  address space type            |</span>
+00830 <span class="comment">        |  (widest used data mode)       |</span>
+00831 <span class="comment">        +-------------------------------*/</span>
+00832         <span class="keywordflow">case</span> LL_INFO_ADDRSPACE:
+00833         {
+00834             u_int32 addrSpaceIndex = va_arg(argptr, u_int32);
+00835             u_int32 *addrModeP = va_arg(argptr, u_int32*);
+00836             u_int32 *dataModeP = va_arg(argptr, u_int32*);
+00837             u_int32 *addrSizeP = va_arg(argptr, u_int32*);
+00838         
+00839             <span class="keywordflow">if</span> (addrSpaceIndex &gt;= <a class="code" href="z47__drv_8c.html#a3">ADDRSPACE_COUNT</a>)
+00840                 error = ERR_LL_ILL_PARAM;
+00841             <span class="keywordflow">else</span> {
+00842                 *addrModeP = MDIS_MA08;
+00843                 *dataModeP = MDIS_MD16;
+00844                 *addrSizeP = <a class="code" href="z47__drv_8c.html#a4">ADDRSPACE_SIZE</a>;
+00845             }
+00846 
+00847             <span class="keywordflow">break</span>;
+00848         }
+00849         <span class="comment">/*-------------------------------+</span>
+00850 <span class="comment">        |  interrupt required            |</span>
+00851 <span class="comment">        +-------------------------------*/</span>
+00852         <span class="keywordflow">case</span> LL_INFO_IRQ:
+00853         {
+00854             u_int32 *useIrqP = va_arg(argptr, u_int32*);
+00855 
+00856             *useIrqP = <a class="code" href="z47__drv_8c.html#a2">USE_IRQ</a>;
+00857             <span class="keywordflow">break</span>;
+00858         }
+00859         <span class="comment">/*-------------------------------+</span>
+00860 <span class="comment">        |  process lock mode             |</span>
+00861 <span class="comment">        +-------------------------------*/</span>
+00862         <span class="keywordflow">case</span> LL_INFO_LOCKMODE:
+00863         {
+00864             u_int32 *lockModeP = va_arg(argptr, u_int32*);
+00865 
+00866             *lockModeP = LL_LOCK_CALL;
+00867             <span class="keywordflow">break</span>;
+00868         }
+00869         <span class="comment">/*-------------------------------+</span>
+00870 <span class="comment">        |  (unknown)                     |</span>
+00871 <span class="comment">        +-------------------------------*/</span>
+00872         <span class="keywordflow">default</span>:
+00873             error = ERR_LL_ILL_PARAM;
+00874     }
 00875 
-00876     <span class="keywordflow">return</span> (error);
-00877 }
-00878 
-00879 <span class="comment">/******************************** Ident ************************************/</span>
-<a name="l00884"></a><a class="code" href="z47__drv_8c.html#a18">00884</a> <span class="keyword">static</span> <span class="keywordtype">char</span>* <a class="code" href="z47__drv_8c.html#a18">Ident</a>(<span class="keywordtype">void</span>)
-00885 {
-00886     <span class="keywordflow">return</span> (<span class="stringliteral">"Z47 - Z47 low level driver: $Id: z47_drv.c,v $"</span>);
-00887 }
-00888 
-00889 <span class="comment">/********************************* Cleanup *********************************/</span>
-<a name="l00899"></a><a class="code" href="z47__drv_8c.html#a19">00899</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a19">Cleanup</a>(
-00900     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl,
-00901     int32     retCode
-00902 )
-00903 {
-00904     <span class="comment">/*------------------------------+</span>
-00905 <span class="comment">    |  close handles                |</span>
-00906 <span class="comment">    +------------------------------*/</span>
-00907     <span class="comment">/* clean up desc */</span>
-00908     <span class="keywordflow">if</span> (llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o3">descHdl</a>)
-00909         DESC_Exit(&amp;llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o3">descHdl</a>);
-00910 
-00911     <span class="comment">/* clean up debug */</span>
-00912     DBGEXIT((&amp;<a class="code" href="z47__drv_8c.html#a6">DBH</a>));
-00913 
-00914     <span class="comment">/*------------------------------+</span>
-00915 <span class="comment">    |  free memory                  |</span>
-00916 <span class="comment">    +------------------------------*/</span>
-00917     <span class="comment">/* free my handle */</span>
-00918     OSS_MemFree(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o1">osHdl</a>, (int8*)llHdl, llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o0">memAlloc</a>);
-00919 
-00920     <span class="comment">/*return error code */</span>
-00921     <span class="keywordflow">return</span> (retCode);
-00922 }
-00923 
-00924 <span class="comment">/********************************* WdogTrig *********************************/</span>
-<a name="l00934"></a><a class="code" href="z47__drv_8c.html#a20">00934</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a20">WdogTrig</a>(
-00935     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl,
-00936     int32     pat
-00937 )
-00938 {
-00939     int32 error=ERR_SUCCESS;
-00940     int32 read, val;
-00941 
-00942     <span class="comment">/* watchdog not enabled ? */</span>
-00943     <span class="keywordflow">if</span> (llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o10">wdStart</a> == 0) {
-00944         <span class="keywordflow">return</span> ERR_LL_DEV_NOTRDY;
-00945     }
-00946 
-00947     <span class="comment">/* read last written pattern */</span>
-00948     read = MREAD_D32(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>, Z47_CLR);
-00949 
-00950     <span class="comment">/* pattern from user */</span>
-00951     <span class="keywordflow">if</span> (pat) {
-00952         <span class="comment">/* illegal pattern? */</span>
-00953         <span class="keywordflow">if</span> ((pat != <a class="code" href="wdog_8h.html#a19">WDOG_TRIGPAT</a>(0)) &amp;&amp;
-00954             (pat != <a class="code" href="wdog_8h.html#a19">WDOG_TRIGPAT</a>(1))) {
-00955             DBGWRT_ERR((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"*** LL - Z17_SetStat(WDOG_TRIG_PAT): illegal pattern 0x%x\n"</span>));
-00956             <span class="keywordflow">return</span> ERR_LL_ILL_PARAM;
-00957         }
-00958 
-00959         <span class="comment">/* not the first trigger? */</span>
-00960         <span class="keywordflow">if</span> (read != 0) {
-00961             <span class="comment">/* repeated pattern? */</span>
-00962             <span class="keywordflow">if</span> (pat == read) {
-00963                 DBGWRT_ERR((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"*** LL - Z17_SetStat(WDOG_TRIG_PAT): repeated pattern 0x%x\n"</span>));
-00964                 <span class="keywordflow">return</span> ERR_LL_ILL_PARAM;
-00965             }
-00966         }
-00967         val = pat;
-00968     }
-00969     <span class="comment">/* no pattern given */</span>
-00970     <span class="keywordflow">else</span> {
-00971         <span class="comment">/* first trigger? */</span>
-00972         <span class="keywordflow">if</span> (read == 0)
-00973             read = <a class="code" href="wdog_8h.html#a19">WDOG_TRIGPAT</a>(0);
-00974 
-00975         <span class="comment">/* compute new pattern from read pattern */</span>
-00976         val =  (read &amp; 0x0f) &lt;&lt; 4;
-00977         val |= (read &amp; 0xf0) &gt;&gt; 4;
-00978     }
-00979 
-00980     <span class="comment">/* write trigger pattern */</span>
-00981     MWRITE_D32(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>, Z47_CLR, val);
-00982 
-00983     <span class="keywordflow">return</span> (error);
-00984 }
+00876     va_end(argptr);
+00877 
+00878     <span class="keywordflow">return</span> (error);
+00879 }
+00880 
+00881 <span class="comment">/******************************** Ident ************************************/</span>
+<a name="l00886"></a><a class="code" href="z47__drv_8c.html#a18">00886</a> <span class="keyword">static</span> <span class="keywordtype">char</span>* <a class="code" href="z47__drv_8c.html#a18">Ident</a>(<span class="keywordtype">void</span>)
+00887 {
+00888     <span class="keywordflow">return</span> (<span class="stringliteral">"Z47 - Z47 low level driver: $Id: z47_drv.c,v $"</span>);
+00889 }
+00890 
+00891 <span class="comment">/********************************* Cleanup *********************************/</span>
+<a name="l00901"></a><a class="code" href="z47__drv_8c.html#a19">00901</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a19">Cleanup</a>(
+00902     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl,
+00903     int32     retCode
+00904 )
+00905 {
+00906     <span class="comment">/*------------------------------+</span>
+00907 <span class="comment">    |  close handles                |</span>
+00908 <span class="comment">    +------------------------------*/</span>
+00909     <span class="comment">/* clean up desc */</span>
+00910     <span class="keywordflow">if</span> (llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o3">descHdl</a>)
+00911         DESC_Exit(&amp;llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o3">descHdl</a>);
+00912 
+00913     <span class="comment">/* clean up debug */</span>
+00914     DBGEXIT((&amp;<a class="code" href="z47__drv_8c.html#a6">DBH</a>));
+00915 
+00916     <span class="comment">/*------------------------------+</span>
+00917 <span class="comment">    |  free memory                  |</span>
+00918 <span class="comment">    +------------------------------*/</span>
+00919     <span class="comment">/* free my handle */</span>
+00920     OSS_MemFree(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o1">osHdl</a>, (int8*)llHdl, llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o0">memAlloc</a>);
+00921 
+00922     <span class="comment">/*return error code */</span>
+00923     <span class="keywordflow">return</span> (retCode);
+00924 }
+00925 
+00926 <span class="comment">/********************************* WdogTrig *********************************/</span>
+<a name="l00936"></a><a class="code" href="z47__drv_8c.html#a20">00936</a> <span class="keyword">static</span> int32 <a class="code" href="z47__drv_8c.html#a20">WdogTrig</a>(
+00937     <a class="code" href="structLL__HANDLE.html">LL_HANDLE</a> *llHdl,
+00938     int32     pat
+00939 )
+00940 {
+00941     int32 error=ERR_SUCCESS;
+00942     int32 read, val;
+00943 
+00944     <span class="comment">/* watchdog not enabled ? */</span>
+00945     <span class="keywordflow">if</span> (llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o10">wdStart</a> == 0) {
+00946         <span class="keywordflow">return</span> ERR_LL_DEV_NOTRDY;
+00947     }
+00948 
+00949     <span class="comment">/* read last written pattern */</span>
+00950     read = MREAD_D32(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>, Z47_CLR);
+00951 
+00952     <span class="comment">/* pattern from user */</span>
+00953     <span class="keywordflow">if</span> (pat) {
+00954         <span class="comment">/* illegal pattern? */</span>
+00955         <span class="keywordflow">if</span> ((pat != <a class="code" href="wdog_8h.html#a19">WDOG_TRIGPAT</a>(0)) &amp;&amp;
+00956             (pat != <a class="code" href="wdog_8h.html#a19">WDOG_TRIGPAT</a>(1))) {
+00957             DBGWRT_ERR((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"*** LL - Z17_SetStat(WDOG_TRIG_PAT): illegal pattern 0x%x\n"</span>, pat));
+00958             <span class="keywordflow">return</span> ERR_LL_ILL_PARAM;
+00959         }
+00960 
+00961         <span class="comment">/* not the first trigger? */</span>
+00962         <span class="keywordflow">if</span> (read != 0) {
+00963             <span class="comment">/* repeated pattern? */</span>
+00964             <span class="keywordflow">if</span> (pat == read) {
+00965                 DBGWRT_ERR((<a class="code" href="z47__drv_8c.html#a6">DBH</a>, <span class="stringliteral">"*** LL - Z17_SetStat(WDOG_TRIG_PAT): repeated pattern 0x%x\n"</span>, pat));
+00966                 <span class="keywordflow">return</span> ERR_LL_ILL_PARAM;
+00967             }
+00968         }
+00969         val = pat;
+00970     }
+00971     <span class="comment">/* no pattern given */</span>
+00972     <span class="keywordflow">else</span> {
+00973         <span class="comment">/* first trigger? */</span>
+00974         <span class="keywordflow">if</span> (read == 0)
+00975             read = <a class="code" href="wdog_8h.html#a19">WDOG_TRIGPAT</a>(0);
+00976 
+00977         <span class="comment">/* compute new pattern from read pattern */</span>
+00978         val =  (read &amp; 0x0f) &lt;&lt; 4;
+00979         val |= (read &amp; 0xf0) &gt;&gt; 4;
+00980     }
+00981 
+00982     <span class="comment">/* write trigger pattern */</span>
+00983     MWRITE_D32(llHdl-&gt;<a class="code" href="structLL__HANDLE.html#o4">ma</a>, Z47_CLR, val);
+00984 
+00985     <span class="keywordflow">return</span> (error);
+00986 }
 </pre></div>
 	</div>
 </div>
