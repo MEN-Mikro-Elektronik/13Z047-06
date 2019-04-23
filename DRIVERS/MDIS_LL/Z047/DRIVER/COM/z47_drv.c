@@ -340,10 +340,10 @@ static int32 Z47_SetStat(
 	INT32_OR_64 value32_or_64
 )
 {
-	char *func = "LL - Z47_SetStat";
 	int32 value = (int32)value32_or_64;		/* 32bit value */
 	MACCESS ma = llHdl->ma;
 	int32 error = ERR_SUCCESS;
+	DBGCMD( static const char func[] = "LL - Z47_SetStat" );
 
 	DBGWRT_1((DBH, "%s: ch=%d code=0x%04x value=0x%x\n",
 				func, ch, code, value));
