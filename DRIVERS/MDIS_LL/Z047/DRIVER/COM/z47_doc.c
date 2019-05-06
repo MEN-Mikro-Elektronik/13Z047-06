@@ -133,6 +133,6 @@
 /** \example wdog_simp.c */
 /** \example wdog_test.c */
 
-/*! \page dummy
+/*! \page z47dummy MEN logo
 \menimages
 */
