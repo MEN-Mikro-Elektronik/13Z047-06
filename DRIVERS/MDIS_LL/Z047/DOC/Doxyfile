@@ -1,6 +1,8 @@
 @INCLUDE_PATH = $(MEN_DOXYGENTMPL)
 @INCLUDE = DoxyfileCommon
 
+#MDIS_COMMIT=
+
 PROJECT_NAME           = "Z47 MDIS Driver"
 INPUT                  = ../DRIVER/COM \
                          ../../../../TOOLS/WDOG/WDOG_CTRL/COM/wdog_ctrl.c \
