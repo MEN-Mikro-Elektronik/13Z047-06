@@ -132,7 +132,7 @@
   </compound>
   <compound kind="file">
     <name>wdog_ctrl.c</name>
-    <path>/root/WORK/13z047-06/TOOLS/WDOG/WDOG_CTRL/COM/</path>
+    <path>/opt/menlinux/TOOLS/WDOG/WDOG_CTRL/COM/</path>
     <filename>wdog__ctrl_8c</filename>
     <member kind="define">
       <type>#define</type>
@@ -209,7 +209,7 @@
   </compound>
   <compound kind="file">
     <name>wdog_simp.c</name>
-    <path>/root/WORK/13z047-06/TOOLS/WDOG/WDOG_SIMP/COM/</path>
+    <path>/opt/menlinux/TOOLS/WDOG/WDOG_SIMP/COM/</path>
     <filename>wdog__simp_8c</filename>
     <member kind="define">
       <type>#define</type>
@@ -232,7 +232,7 @@
   </compound>
   <compound kind="file">
     <name>wdog_test.c</name>
-    <path>/root/WORK/13z047-06/TOOLS/WDOG/WDOG_TEST/COM/</path>
+    <path>/opt/menlinux/TOOLS/WDOG/WDOG_TEST/COM/</path>
     <filename>wdog__test_8c</filename>
     <member kind="function" static="yes">
       <type>void</type>
@@ -255,12 +255,12 @@
   </compound>
   <compound kind="file">
     <name>z47_doc.c</name>
-    <path>/root/WORK/13z047-06/DRIVERS/MDIS_LL/Z047/DRIVER/COM/</path>
+    <path>/opt/menlinux/DRIVERS/MDIS_LL/Z047/DRIVER/COM/</path>
     <filename>z47__doc_8c</filename>
   </compound>
   <compound kind="file">
     <name>z47_drv.c</name>
-    <path>/root/WORK/13z047-06/DRIVERS/MDIS_LL/Z047/DRIVER/COM/</path>
+    <path>/opt/menlinux/DRIVERS/MDIS_LL/Z047/DRIVER/COM/</path>
     <filename>z47__drv_8c</filename>
     <class kind="struct">LL_HANDLE</class>
     <member kind="define">
@@ -467,8 +467,8 @@
     </member>
   </compound>
   <compound kind="page">
-    <name>dummy</name>
-    <title></title>
-    <filename>dummy</filename>
+    <name>z47dummy</name>
+    <title>MEN logo</title>
+    <filename>z47dummy</filename>
   </compound>
 </tagfile>
