@@ -13,15 +13,15 @@
 			<description>Watchdog in Chameleon FPGA</description>
 			<devnameprefix>WDOG</devnameprefix>
 			<devtype>MDIS</devtype>
-            <autoid>
-                <chamv2id>47</chamv2id>
-            </autoid>
-            <bbslot>
-                <bbismodel>CHAMELEON</bbismodel>
-            </bbslot>
-            <bbslot>
-                <bbismodel>CHAMELEON_PCITBL</bbismodel>
-            </bbslot>
+			<autoid>
+				<chamv2id>47</chamv2id>
+			</autoid>
+			<bbslot>
+				<bbismodel>CHAMELEON</bbismodel>
+			</bbslot>
+			<bbslot>
+				<bbismodel>CHAMELEON_PCITBL</bbismodel>
+			</bbslot>
 		</model>
 	</modellist>
 	<!-- Global software modules -->
