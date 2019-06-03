@@ -3,8 +3,6 @@
  *        \file  z47.h
  *
  *      \author  dieter.pfeuffer@men.de
- *        $Date: $
- *    $Revision: $
  * 
  *  	 \brief  Header file for 16Z047 IP core register defines
  *                      

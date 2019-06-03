@@ -3,8 +3,6 @@
  *        \file  z47_drv.h
  *
  *      \author  dieter.pfeuffer@men.de
- *        $Date: $
- *    $Revision: 2.6 $
  *
  *       \brief  Header file for Z47 driver containing
  *               Z47 function prototypes

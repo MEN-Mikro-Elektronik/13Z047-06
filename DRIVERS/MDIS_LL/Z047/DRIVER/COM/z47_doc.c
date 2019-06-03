@@ -3,8 +3,6 @@
 *        \file  z47_doc.c
 *
 *      \author  dieter.pfeuffer@men.de
-*        $Date: $
-*    $Revision: $
 *
 *      \brief   User documentation for Z47 device driver
 *

@@ -3,8 +3,6 @@
  *        \file  z47_drv.c
  *
  *      \author  dieter.pfeuffer@men.de 
- *        $Date: $
- *    $Revision: $
  *
  *       \brief  Low-level driver for the 16Z047 watchdog IP core
  *
@@ -88,6 +86,8 @@ typedef struct {
 /* include files which need LL_HANDLE */
 #include <MEN/ll_entry.h>       /* low-level driver jump table */
 #include <MEN/z47_drv.h>        /* Z47 driver header file      */
+
+static const char IdentString[]=MENT_XSTR(MAK_REVISION);
 
 /*-----------------------------------------+
 |  PROTOTYPES                              |
@@ -897,7 +897,7 @@ static int32 Z47_Info(
  */
 static char* Ident(void)
 {
-	return ("Z47 - Z47 low level driver: $Id: z47_drv.c,v $");
+	return( (char*) IdentString );
 }
 
 /********************************* Cleanup *********************************/
