@@ -2,8 +2,8 @@
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="packagedesc.xsd">
 	<name>13z04706</name>
 	<description>MDIS5 driver package for MEN 16Z047 Watchdog</description>
-	<date>2016-07-11</date>
-	<revision>0.1</revision>
+	<date>2019-06-07</date>
+	<revision>13Z047-06_01_03-9-g550b90a</revision>
 	<docroot>DRIVERS/MDIS_LL/Z047/DOC/html/index.html</docroot>
 	<!-- Models -->
 	<modellist>
